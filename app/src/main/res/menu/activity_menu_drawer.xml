@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Mis Equipos">
+        <menu>
+            <item
+                android:id="@+id/nav_equipos"
+                android:title="Equipos" />
+            <item
+                android:id="@+id/nav_solicitudes"
+                android:title="Solicitudes" />
+        </menu>
+    </item>
+
+    <item android:title="Mis Partidos">
+        <menu>
+            <item
+                android:id="@+id/nav_partidos"
+                android:title="Partidos" />
+            <item
+                android:id="@+id/nav_sin_responder"
+                android:title="Sin Responder" />
+        </menu>
+    </item>
+
+</menu>
