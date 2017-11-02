@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../../../../jakan/Desktop/Pichanguea2-master/Pichanguea.iml" filepath="$PROJECT_DIR$/../../../../jakan/Desktop/Pichanguea2-master/Pichanguea.iml" />
+      <module fileurl="file://C:\Users\jakan\Desktop\Pichanguea2-master\Pichanguea.iml" filepath="C:\Users\jakan\Desktop\Pichanguea2-master\Pichanguea.iml" />
       <module fileurl="file://$PROJECT_DIR$/Pichanguea2-master.iml" filepath="$PROJECT_DIR$/Pichanguea2-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pichanguea_2.iml" filepath="$PROJECT_DIR$/pichanguea_2.iml" />
     </modules>
   </component>
 </project>

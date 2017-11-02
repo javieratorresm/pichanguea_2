@@ -2,9 +2,6 @@ package com.example.diego.pichanguea.Utilities;
 
 import android.util.Log;
 
-import com.example.diego.pichanguea.Models.Equipo;
-import com.example.diego.pichanguea.Models.Partido;
-import com.example.diego.pichanguea.Models.TipoPartido;
 import com.example.diego.pichanguea.Models.Usuario;
 
 import org.json.JSONArray;
@@ -59,31 +56,6 @@ public class JsonHandler {
             Log.e("ERROR", this.getClass().toString() + " " + e.toString());
         }
         return null;
-
-    }
-    public void getPartido(String datos, int posicion, Partido partido, TipoPartido tipoPartido,Equipo equipo){
-        try {
-            JSONArray ja = new JSONArray(datos);
-
-            JSONObject row = ja.getJSONObject(posicion);
-            equipo.setEquNombre(row.getJSONObject("partido").getJSONObject("equipo").getString("equNombre"));
-            partido.setIdPartido(row.getJSONObject("partido").getString("idPartido"));
-            tipoPartido.setIdTipoPartido(row.getJSONObject("partido").getJSONObject("tipoPartido").getString("idTipoPartido"));
-            tipoPartido.setIdDeporte(row.getJSONObject("partido").getJSONObject("tipoPartido").getString("idDeporte"));
-            tipoPartido.setTpaNombre(row.getJSONObject("partido").getJSONObject("tipoPartido").getString("tpaNombre"));
-            tipoPartido.setTpaMaximoJugadores(Math.round(Float.valueOf(row.getJSONObject("partido").getJSONObject("tipoPartido").getString("tpaMaximoJugadores"))));
-            partido.setTipoPartido(tipoPartido);
-            partido.setParFecha(row.getJSONObject("partido").getString("parFecha"));
-            partido.setParHora(row.getJSONObject("partido").getString("parHora"));
-            partido.setParComplejo(row.getJSONObject("partido").getString("parComplejo"));
-            partido.setParCancha(row.getJSONObject("partido").getString("parCancha"));
-            partido.setEquipo(equipo);
-
-
-
-        } catch (JSONException e) {
-            Log.e("ERROR", this.getClass().toString() + " " + e.toString());
-        }
 
     }
 

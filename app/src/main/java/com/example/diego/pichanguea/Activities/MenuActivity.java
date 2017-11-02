@@ -1,6 +1,5 @@
 package com.example.diego.pichanguea.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,15 +19,13 @@ import android.widget.TextView;
 import com.example.diego.pichanguea.Controllers.Get.jugadoresGet;
 import com.example.diego.pichanguea.Controllers.Get.partidosGet;
 import com.example.diego.pichanguea.Controllers.Get.sesionGet;
-import com.example.diego.pichanguea.Models.Partido;
 import com.example.diego.pichanguea.Models.Usuario;
 import com.example.diego.pichanguea.R;
 import com.example.diego.pichanguea.Utilities.JsonHandler;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    Partido partido=new Partido();
-    Usuario usuario = new Usuario();
+    private String[] mPlanetTitles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +59,7 @@ public class MenuActivity extends AppCompatActivity
         View header=navigationView.getHeaderView(0);
         String resultado=getIntent().getExtras().getString("parametro");
         JsonHandler jh= new JsonHandler();
-
-
+        Usuario usuario = new Usuario();
         jh.getInformacion(resultado,usuario );
 
 
@@ -72,6 +67,7 @@ public class MenuActivity extends AppCompatActivity
 
 
 
+        String countryList[] = {"India", "China", "australia", "Portugle", "America", "NewZealand"};
 
 
 
@@ -131,28 +127,15 @@ public class MenuActivity extends AppCompatActivity
     }
 
 
-    public void mostrarPartidos(final String result) {
-
+    public void mostrarPartidos(String result) {
         JsonHandler jh= new JsonHandler();
         String[] listaPartidos=jh.getPartidos(result);
+        System.out.println(listaPartidos.length);
         ListView simpleList = (ListView) findViewById(R.id.listPartidos);
+        String countryList[] = {"India", "China", "australia", "Portugle", "America", "NewZealand"};
+        System.out.println(countryList[0]);
         ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.listview_layout,R.id.textView,listaPartidos);
-        final Intent act=new Intent(this,InfoPartidoActivity.class);
         simpleList.setAdapter(adapter);
-
-        simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
-            {
-
-                act.putExtra("info",result);
-                act.putExtra("posicion",String.valueOf(arg2));
-                act.putExtra("idUsuario",usuario.getId());
-                startActivity(act);
-                finish();
-            }
-        });
 
     }
 }

@@ -48,6 +48,7 @@ public class partidosGet extends AsyncTask<String, Void, String> {
         return null;
     }// doInBackground(String... urls)
     protected void onPostExecute(String result) {
+        System.out.println(result);
         menu_activity.mostrarPartidos(result);
     }
 }
