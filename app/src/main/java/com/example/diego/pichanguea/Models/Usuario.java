@@ -18,6 +18,21 @@ public class Usuario {
     String id;
     String token;
 
+    public Usuario() {
+        this.nombreUsuario = nombreUsuario;
+        this.clave = clave;
+        this.rutSinDigito = rutSinDigito;
+        this.rutConDigito = rutConDigito;
+        this.nombre = nombre;
+        this.paterno = paterno;
+        this.materno = materno;
+        this.celular = celular;
+        this.mail = mail;
+        this.apodo = apodo;
+        this.id = id;
+        this.token = token;
+    }
+
     public String getNombreUsuario() {
         return nombreUsuario;
     }
