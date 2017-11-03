@@ -133,6 +133,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Callback received when a permissions request has been completed.
      */
     @Override
+    public void onBackPressed() {
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
+
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         if (requestCode == REQUEST_READ_CONTACTS) {
@@ -353,6 +362,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 mPasswordView.requestFocus();
             }
         }
+
 
         @Override
         protected void onCancelled() {

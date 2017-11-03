@@ -1,8 +1,11 @@
 package com.example.diego.pichanguea.Activities;
 
+import android.content.Intent;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 import android.media.Image;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,14 +35,14 @@ public class InfoPartidoActivity extends AppCompatActivity {
     String asistencia;
     private LinearLayout layoutAnimado;
     private int cantidadGalletas=0;
-
+    private String info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_partido);
         layoutAnimado = (LinearLayout) findViewById(R.id.confirmacion);
-        String info=getIntent().getExtras().getString("info");
+        info=getIntent().getExtras().getString("info");
         int posicion=Integer.parseInt(getIntent().getExtras().getString("posicion"));
         String idUsuario=getIntent().getExtras().getString("idUsuario");
         jh.getPartido(info,posicion,partido,tipoPartido,equipo);
@@ -105,6 +108,13 @@ public class InfoPartidoActivity extends AppCompatActivity {
 
 
 
+    }
+    @Override
+    public void onBackPressed() {
+        Intent act=new Intent(this,MenuActivity.class);
+        System.out.println(info);
+        act.putExtra("parametro", info);
+        startActivity(act);
     }
 
 

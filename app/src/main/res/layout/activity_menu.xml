@@ -13,11 +13,7 @@
         layout="@layout/app_bar_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <include
-        layout="@layout/listview_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
@@ -28,15 +24,6 @@
         app:headerLayout="@layout/nav_header_menu"
         app:menu="@menu/activity_menu_drawer" />
 
-    <ListView
-        android:id="@+id/listPartidos"
-        android:layout_width="368dp"
-        android:layout_height="476dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="27dp"
-        android:divider="#3b000000"
-        android:backgroundTint="#3b55ab27"
-        android:dividerHeight="1dp"
-        android:listSelector="#C8E6C9"/>
+
 
 </android.support.v4.widget.DrawerLayout>

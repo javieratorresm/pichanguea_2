@@ -8,4 +8,15 @@
     tools:context="com.example.diego.pichanguea.Activities.MenuActivity"
     tools:showIn="@layout/app_bar_menu">
 
+    <ListView
+        android:id="@+id/listPartidos"
+        android:layout_width="368dp"
+        android:layout_height="476dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="27dp"
+        android:divider="#3b000000"
+        android:backgroundTint="#3b55ab27"
+        android:dividerHeight="1dp"
+        android:listSelector="#C8E6C9"/>
+
 </android.support.constraint.ConstraintLayout>
