@@ -46,11 +46,32 @@ public class JsonHandler {
     public String[] getPartidos(String datos){
         try {
             JSONArray ja = new JSONArray(datos);
-            String[] result = new String[10];
+            String[] result = new String[ja.length()];
             String actor;
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < ja.length(); i++) {
                 JSONObject row = ja.getJSONObject(i);
-                actor =row.getJSONObject("partido").getJSONObject("equipo").getString("equNombre")+"            "+row.getJSONObject("partido").getJSONObject("tipoPartido").getString("tpaNombre");
+                actor =row.getJSONObject("partido").getJSONObject("equipo").getString("equNombre")+"@#"+row.getJSONObject("partido").getJSONObject("tipoPartido").getString("tpaNombre")+"@#"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Dia")+"/"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Mes")+"/"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Año");
+                result[i] = actor;
+                System.out.println(actor);
+
+            }
+            return result;
+        } catch (JSONException e) {
+            Log.e("ERROR", this.getClass().toString() + " " + e.toString());
+        }
+        return null;
+
+    }
+    public String[] getJugadores(String datos,Partido partido){
+        try {
+            JSONArray ja = new JSONArray(datos);
+
+            String[] result = new String[ja.length()];
+            String actor;
+            for (int i = 0; i < ja.length(); i++) {
+                JSONObject row = ja.getJSONObject(i);
+                //actor =ja.getString(i);
+                actor=row.getString("jugNombre")+" "+row.getString("jugPaterno");
                 result[i] = actor;
 
             }
@@ -72,9 +93,30 @@ public class JsonHandler {
             tipoPartido.setIdDeporte(row.getJSONObject("partido").getJSONObject("tipoPartido").getString("idDeporte"));
             tipoPartido.setTpaNombre(row.getJSONObject("partido").getJSONObject("tipoPartido").getString("tpaNombre"));
             tipoPartido.setTpaMaximoJugadores(Math.round(Float.valueOf(row.getJSONObject("partido").getJSONObject("tipoPartido").getString("tpaMaximoJugadores"))));
+
             partido.setTipoPartido(tipoPartido);
+            partido.setIdPartido(String.valueOf(Math.round(Float.valueOf(row.getJSONObject("partido").getString("idPartido")))));
             partido.setParFecha(row.getJSONObject("partido").getString("parFecha"));
+            partido.setParDia(row.getJSONObject("partido").getJSONObject("parFecha").getString("Dia"));
+            partido.setParMes(row.getJSONObject("partido").getJSONObject("parFecha").getString("Mes"));
+            partido.setParAno(row.getJSONObject("partido").getJSONObject("parFecha").getString("Año"));
+
             partido.setParHora(row.getJSONObject("partido").getString("parHora"));
+
+            if(Integer.valueOf(row.getJSONObject("partido").getJSONObject("parHora").getString("Hora"))<10){
+                partido.setParHoras("0"+row.getJSONObject("partido").getJSONObject("parHora").getString("Hora"));            }
+            else{
+                partido.setParHoras(row.getJSONObject("partido").getJSONObject("parHora").getString("Hora"));
+            }
+
+
+            if(Integer.valueOf(row.getJSONObject("partido").getJSONObject("parHora").getString("Minutos"))<10){
+                partido.setParMinutos("0"+row.getJSONObject("partido").getJSONObject("parHora").getString("Minutos"));
+            }
+            else{
+                partido.setParMinutos(row.getJSONObject("partido").getJSONObject("parHora").getString("Minutos"));
+
+            }
             partido.setParComplejo(row.getJSONObject("partido").getString("parComplejo"));
             partido.setParCancha(row.getJSONObject("partido").getString("parCancha"));
             partido.setEquipo(equipo);

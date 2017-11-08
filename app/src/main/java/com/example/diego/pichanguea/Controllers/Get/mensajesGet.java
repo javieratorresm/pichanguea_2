@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.diego.pichanguea.Activities.ChatActivity;
 import com.example.diego.pichanguea.Activities.InfoPartidoActivity;
 import com.example.diego.pichanguea.Activities.MenuActivity;
 import com.example.diego.pichanguea.Models.Usuario;
@@ -20,12 +21,12 @@ import java.util.Scanner;
  * Created by diego on 05-10-2017.
  */
 
-public class jugadoresGet extends AsyncTask<String, Void, String> {
+public class mensajesGet extends AsyncTask<String, Void, String> {
     private SSLTrust sT;
-    private InfoPartidoActivity infoPartidoActivity;
+    private ChatActivity chatActivity;
     Toast toast;
-    public jugadoresGet(InfoPartidoActivity infoPartidoActivity){
-        this.infoPartidoActivity=infoPartidoActivity;
+    public mensajesGet(ChatActivity chatActivity){
+        this.chatActivity=chatActivity;
     }
     @Override
     protected String doInBackground(String...url) {
@@ -49,7 +50,7 @@ public class jugadoresGet extends AsyncTask<String, Void, String> {
         return null;
     }// doInBackground(String... urls)
     protected void onPostExecute(String result) {
-        infoPartidoActivity.mostrarJugadores(result);
+        chatActivity.mostrarMensajes(result);
 
     }
 }

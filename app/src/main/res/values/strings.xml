@@ -22,4 +22,7 @@
     <string name="action_settings">Cerrar Sesión</string>
     <string name="servidor">http://usach.pichanguea.cl/</string>
     <string name="title_activity_register">Sign in</string>
+    <string name="title_activity_chat">ChatActivity</string>
+
+
 </resources>

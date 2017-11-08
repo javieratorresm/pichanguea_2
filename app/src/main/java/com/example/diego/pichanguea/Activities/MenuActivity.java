@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.diego.pichanguea.Classes.AdapterPartido;
 import com.example.diego.pichanguea.Controllers.Get.jugadoresGet;
 import com.example.diego.pichanguea.Controllers.Get.partidosGet;
 import com.example.diego.pichanguea.Controllers.Get.sesionGet;
@@ -30,7 +31,7 @@ public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Partido partido=new Partido();
     Usuario usuario = new Usuario();
-
+    String resultado;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,14 +66,14 @@ public class MenuActivity extends AppCompatActivity
         //ListView simpleList;
 
         //View header=navigationView.getHeaderView(0);
-        String resultado=getIntent().getExtras().getString("parametro");
+        resultado=getIntent().getExtras().getString("parametro");
         JsonHandler jh= new JsonHandler();
 
 
         jh.getInformacion(resultado,usuario );
 
 
-        new partidosGet(this).execute(getResources().getString(R.string.servidor)+"api/Jugador/1/Partidos");
+        new partidosGet(this).execute(getResources().getString(R.string.servidor)+"api/Jugador/1/Partidos/");
 
 
 
@@ -141,8 +142,10 @@ public class MenuActivity extends AppCompatActivity
         JsonHandler jh= new JsonHandler();
         String[] listaPartidos=jh.getPartidos(result);
         ListView simpleList = (ListView) findViewById(R.id.listPartidos);
-        ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.listview_layout,R.id.textView,listaPartidos);
+        //ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.listview_layout,R.id.textView,listaPartidos);
+        AdapterPartido adapter=new AdapterPartido(this,listaPartidos);
         final Intent act=new Intent(this,InfoPartidoActivity.class);
+
         simpleList.setAdapter(adapter);
 
         simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -152,12 +155,20 @@ public class MenuActivity extends AppCompatActivity
             {
 
                 act.putExtra("info",result);
+                System.out.println(result);
+
                 act.putExtra("posicion",String.valueOf(arg2));
+                System.out.println(String.valueOf(arg2));
                 act.putExtra("idUsuario",usuario.getId());
+                System.out.println(usuario.getId());
+                act.putExtra("parametro",resultado);
+                System.out.println(resultado);
                 startActivity(act);
                 finish();
             }
         });
 
     }
+
+
 }

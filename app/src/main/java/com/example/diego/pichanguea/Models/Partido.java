@@ -13,24 +13,61 @@ public class Partido {
     String parCreacion;
     String parEstado;
     String parFecha;
+    String parDia;
+    String parMes;
+    String parAno;
     String parGeoReferencia;
     String parHora;
+    String parMinutos;
+    String parHoras;
     String parRival;
     String parUbicacion;
+    int numeroGalletas;
+
+
 
     public Partido() {
-        this.idPartido = idPartido;
-        this.equipo = equipo;
-        this.tipoPartido = tipoPartido;
-        this.parCancha = parCancha;
-        this.parComplejo = parComplejo;
-        this.parCreacion = parCreacion;
-        this.parEstado = parEstado;
-        this.parFecha = parFecha;
-        this.parGeoReferencia = parGeoReferencia;
-        this.parHora = parHora;
-        this.parRival = parRival;
-        this.parUbicacion = parUbicacion;
+
+    }
+
+    public String getParDia() {
+        return parDia;
+    }
+
+    public void setParDia(String parDia) {
+        this.parDia = parDia;
+    }
+
+    public String getParMes() {
+        return parMes;
+    }
+
+    public void setParMes(String parMes) {
+        this.parMes = parMes;
+    }
+
+    public String getParAno() {
+        return parAno;
+    }
+
+    public void setParAno(String parAno) {
+        this.parAno = parAno;
+    }
+
+    public String getParMinutos() {
+        return parMinutos;
+    }
+
+    public void setParMinutos(String parMinutos) {
+        this.parMinutos = parMinutos;
+    }
+
+    public String getParHoras() {
+        return parHoras;
+    }
+
+    public void setParHoras(String parHoras) {
+        this.parHoras = parHoras;
     }
 
     public String getIdPartido() {
@@ -127,5 +164,13 @@ public class Partido {
 
     public void setParUbicacion(String parUbicacion) {
         this.parUbicacion = parUbicacion;
+    }
+
+    public int getNumeroGalletas() {
+        return numeroGalletas;
+    }
+
+    public void setNumeroGalletas(int numeroGalletas) {
+        this.numeroGalletas = numeroGalletas;
     }
 }

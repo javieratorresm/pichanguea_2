@@ -20,15 +20,20 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.diego.pichanguea.Classes.AdapterJugador;
+import com.example.diego.pichanguea.Controllers.Get.jugadoresGet;
+import com.example.diego.pichanguea.Controllers.Get.partidosGet;
 import com.example.diego.pichanguea.Models.Equipo;
 import com.example.diego.pichanguea.Models.Partido;
 import com.example.diego.pichanguea.Models.TipoPartido;
+import com.example.diego.pichanguea.Models.Usuario;
 import com.example.diego.pichanguea.R;
 import com.example.diego.pichanguea.Utilities.JsonHandler;
 
 
 public class InfoPartidoActivity extends AppCompatActivity {
     Partido partido=new Partido();
+    Usuario usuario=new Usuario();
     TipoPartido tipoPartido=new TipoPartido();
     Equipo equipo=new Equipo();
     JsonHandler jh= new JsonHandler();
@@ -36,6 +41,8 @@ public class InfoPartidoActivity extends AppCompatActivity {
     private LinearLayout layoutAnimado;
     private int cantidadGalletas=0;
     private String info;
+    String resultado;
+    private int numeroJugadores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +52,8 @@ public class InfoPartidoActivity extends AppCompatActivity {
         info=getIntent().getExtras().getString("info");
         int posicion=Integer.parseInt(getIntent().getExtras().getString("posicion"));
         String idUsuario=getIntent().getExtras().getString("idUsuario");
+        resultado=getIntent().getExtras().getString("parametro");
+        usuario.setId(String.valueOf(Math.round(Float.valueOf(idUsuario))));
         jh.getPartido(info,posicion,partido,tipoPartido,equipo);
         TextView tipoPartidoView=(TextView) findViewById(R.id.textTipoPartido);
         TextView fechaView=(TextView) findViewById(R.id.textFecha);
@@ -52,21 +61,22 @@ public class InfoPartidoActivity extends AppCompatActivity {
         TextView canchaView=(TextView) findViewById(R.id.textCancha);
         TextView equipoView=(TextView) findViewById(R.id.textNombreEquipo);
         TextView horaView=(TextView) findViewById(R.id.textHora);
-        ListView listaJugadores=(ListView)findViewById(R.id.listaJugadores);
+
         TextView textCantidadGalletas=(TextView)findViewById(R.id.textCantidadGalletas);
         textCantidadGalletas.setText(String.valueOf(cantidadGalletas));
-        //ImageButton botonAgregar=(ImageButton)findViewById(R.id.masButton);
-        //ImageButton botonRestar=(ImageButton)findViewById(R.id.menosButton);
+
         if(tipoPartido.getIdTipoPartido().equals("7.0")){
             tipoPartidoView.setText("Partido nacional");
+            numeroJugadores=14;
         }
         else if(tipoPartido.getIdTipoPartido().equals("10.0")){;
             tipoPartidoView.setText("Partido internacional");
+            numeroJugadores=11;
         }
-        fechaView.setText(partido.getParFecha());
+        fechaView.setText(partido.getParDia()+" / "+partido.getParMes()+" / "+partido.getParAno());
         complejoView.setText(partido.getParComplejo());
         equipoView.setText(partido.getEquipo().getEquNombre());
-        horaView.setText(partido.getParHora());
+        horaView.setText(partido.getParHoras()+":"+partido.getParMinutos());
 
         if(!partido.getParCancha().equals("")){
             canchaView.setVisibility(View.VISIBLE);
@@ -79,31 +89,12 @@ public class InfoPartidoActivity extends AppCompatActivity {
             animar(true);
             layoutAnimado.setVisibility(View.VISIBLE);
         }
-        String[] values = new String[] { "Neymar Jr",
-                "Marcelo Salas",
-                "Diego Maradona",
-                "Alexis Sanchez",
-                "Ronaldo",
-                "Pele",
-                "Gary Medel",
-                "Marcelo Diaz",
-                "Arturo Vidal",
-                "Claudio Bravo"
-        };
-        ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.elemento_jugador,R.id.nombreJugadorList,values);
-        listaJugadores.setAdapter(adapter);
+        //new jugadoresGet(this).execute(getResources().getString(R.string.servidor)+"api/jugador/"+usuario.getId()+"/Partidos/"+partido.getIdPartido()+"/jugadores/confirmados");
+        new jugadoresGet(this).execute(getResources().getString(R.string.servidor)+"api/jugador/"+usuario.getId()+"/Partidos/195/jugadores/confirmados");
 
-        int count=listaJugadores.getAdapter().getCount();
-        System.out.println("cantidad elementos");
-        System.out.println(count);
-        for(int i=0;i<count;i++){
 
-            View view=listaJugadores.getChildAt(i);
-            //view.setBackgroundColor(0x000000);
-            //ViewGroup row = (ViewGroup) listaJugadores.getChildAt(i);
 
-            //System.out.println(row.getId());
-        }
+
 
 
 
@@ -113,7 +104,7 @@ public class InfoPartidoActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent act=new Intent(this,MenuActivity.class);
         System.out.println(info);
-        act.putExtra("parametro", info);
+        act.putExtra("parametro", resultado);
         startActivity(act);
     }
 
@@ -163,5 +154,20 @@ public class InfoPartidoActivity extends AppCompatActivity {
 
         }
         textCantidadGalletas.setText(String.valueOf(cantidadGalletas));
+    }
+
+    public void mostrarJugadores(String result) {
+        String[] jugadoresPartido=jh.getJugadores(result,partido);
+        int[] listaGalletas={1,0,0,0,4,0,0,0,1,1,0,0,0,0,1,0,0,0,0,0,0};
+        ListView listaJugadores=(ListView)findViewById(R.id.listaJugadores);
+        //ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.elemento_jugador,R.id.nombreJugadorList,jugadoresPartido);
+        AdapterJugador adapter = new AdapterJugador(this,jugadoresPartido,listaGalletas,numeroJugadores);
+        listaJugadores.setAdapter(adapter);
+    }
+
+    public void abrirChat(View view) {
+
+        Intent act=new Intent(this,ChatActivity.class);
+        startActivity(act);
     }
 }
