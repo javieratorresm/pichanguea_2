@@ -19,6 +19,7 @@ public class AdapterPartido extends ArrayAdapter<String> {
     private final Context context;
     private final String[] listaPartidos;
     String[] separado;
+
     public AdapterPartido(Context context,String[] listaPartidos) {
         super(context, R.layout.elemento_jugador,listaPartidos);
         this.context=context;

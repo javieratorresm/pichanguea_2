@@ -89,8 +89,8 @@ public class InfoPartidoActivity extends AppCompatActivity {
             animar(true);
             layoutAnimado.setVisibility(View.VISIBLE);
         }
-        //new jugadoresGet(this).execute(getResources().getString(R.string.servidor)+"api/jugador/"+usuario.getId()+"/Partidos/"+partido.getIdPartido()+"/jugadores/confirmados");
-        new jugadoresGet(this).execute(getResources().getString(R.string.servidor)+"api/jugador/"+usuario.getId()+"/Partidos/195/jugadores/confirmados");
+        //new jugadoresGet(this).execute(getResources().getString(R.string.servidor)+"api/jugador/"+usuario.getId()+"/Partido/"+partido.getIdPartido()+"/jugadores/confirmados");
+        new jugadoresGet(this).execute(getResources().getString(R.string.servidor)+"api/partido/195/jugadores/confirmados");
 
 
 
@@ -157,11 +157,10 @@ public class InfoPartidoActivity extends AppCompatActivity {
     }
 
     public void mostrarJugadores(String result) {
-        String[] jugadoresPartido=jh.getJugadores(result,partido);
-        int[] listaGalletas={1,0,0,0,4,0,0,0,1,1,0,0,0,0,1,0,0,0,0,0,0};
+        String[] jugadoresPartido=jh.getJugadores(result);
         ListView listaJugadores=(ListView)findViewById(R.id.listaJugadores);
         //ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.elemento_jugador,R.id.nombreJugadorList,jugadoresPartido);
-        AdapterJugador adapter = new AdapterJugador(this,jugadoresPartido,listaGalletas,numeroJugadores);
+        AdapterJugador adapter = new AdapterJugador(this,jugadoresPartido,numeroJugadores);
         listaJugadores.setAdapter(adapter);
     }
 

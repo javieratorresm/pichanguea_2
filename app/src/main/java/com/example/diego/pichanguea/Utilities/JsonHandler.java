@@ -62,17 +62,37 @@ public class JsonHandler {
         return null;
 
     }
-    public String[] getJugadores(String datos,Partido partido){
+    public String[] getJugadores(String datos){
         try {
             JSONArray ja = new JSONArray(datos);
 
-            String[] result = new String[ja.length()];
+
             String actor;
+            int c=0;
+            for(int j=0;j < ja.length(); j++){
+                JSONObject row = ja.getJSONObject(j);
+                if(Math.round(Float.valueOf(row.getString("asistencia")))==1){
+                    c+=1;
+                }
+
+
+
+            }
+            String[] result = new String[c];
+            c=0;
             for (int i = 0; i < ja.length(); i++) {
                 JSONObject row = ja.getJSONObject(i);
-                //actor =ja.getString(i);
-                actor=row.getString("jugNombre")+" "+row.getString("jugPaterno");
-                result[i] = actor;
+                actor=row.getJSONObject("jugador").getString("jugNombre")+" "+row.getJSONObject("jugador").getString("jugPaterno")+"@#"+row.getString("galletas");
+                System.out.println(c);
+                if(Math.round(Float.valueOf(row.getString("asistencia")))==1){
+                    result[c] = actor;
+                    c+=1;
+
+                }
+
+
+
+
 
             }
             return result;

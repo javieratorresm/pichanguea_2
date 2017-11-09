@@ -19,16 +19,17 @@ import com.example.diego.pichanguea.R;
 public class AdapterJugador extends ArrayAdapter<String> {
     private final Context context;
     private final String[] values;
-    private final int[] listaGalletas;
     private final int numeroJugadores;
     private int jugadoresMasGalleta=0;
+    String[] separado;
+    int galleta;
 
-    public AdapterJugador(Context context, String[] values,int[] listaGalletas,int numeroJugadores) {
+    public AdapterJugador(Context context, String[] values,int numeroJugadores) {
         super(context, R.layout.elemento_jugador, values);
         this.context = context;
         this.values = values;
         this.numeroJugadores=numeroJugadores;
-        this.listaGalletas=listaGalletas;
+
     }
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context
@@ -37,15 +38,27 @@ public class AdapterJugador extends ArrayAdapter<String> {
         TextView nombreJugador = (TextView) rowView.findViewById(R.id.nombreJugadorList);
         TextView textGalleta=(TextView) rowView.findViewById(R.id.numeroGalletas);
 
-        if(jugadoresMasGalleta<numeroJugadores){
+        System.out.println(values[position]);
+
+        separado=values[position].split("@#");
+        galleta=Math.round(Float.valueOf(separado[1]));
+
+        nombreJugador.setText(separado[0]);
+        jugadoresMasGalleta+=1+galleta;
+        if(jugadoresMasGalleta<=numeroJugadores){
             nombreJugador.setBackgroundColor(Color.parseColor("#3ee210"));
         }
         else{
             nombreJugador.setBackgroundColor(Color.parseColor("#fff200"));
         }
-        jugadoresMasGalleta+=1+listaGalletas[position];
-        nombreJugador.setText(values[position]);
-        textGalleta.setText("+"+String.valueOf(listaGalletas[position]));
+
+        if (galleta==0){
+            textGalleta.setText("");
+        }
+        else{
+            textGalleta.setText("+"+String.valueOf(galleta));
+        }
+
         return rowView;
     }
 }
