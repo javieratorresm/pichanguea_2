@@ -1,6 +1,7 @@
 package com.example.diego.pichanguea.Classes;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -19,7 +20,7 @@ public class AdapterPartido extends ArrayAdapter<String> {
     private final Context context;
     private final String[] listaPartidos;
     String[] separado;
-
+    String asistencia;
     public AdapterPartido(Context context,String[] listaPartidos) {
         super(context, R.layout.elemento_jugador,listaPartidos);
         this.context=context;
@@ -34,10 +35,15 @@ public class AdapterPartido extends ArrayAdapter<String> {
         TextView textNombreEquipo=(TextView) rowView.findViewById(R.id.idNombreEquipo);
         TextView textnombreTipoPartido=(TextView) rowView.findViewById(R.id.idNombreTipoPartido);
         TextView textFecha=(TextView) rowView.findViewById(R.id.idFechaPartido);
-
+        asistencia=separado[3];
         textNombreEquipo.setText(separado[0]);
         textnombreTipoPartido.setText(separado[1]);
         textFecha.setText(separado[2]);
+        System.out.println("asistencia= "+asistencia);
+        if (asistencia.equals("2.0")) {rowView.setBackgroundColor(Color.parseColor("#fff200"));}
+        else if(asistencia.equals("1.0")){rowView.setBackgroundColor(Color.parseColor("#3ee210"));}
+        else if(asistencia.equals("0.0")){rowView.setBackgroundColor(Color.parseColor("#ff0004"));}
+
         return rowView;
     }
 }

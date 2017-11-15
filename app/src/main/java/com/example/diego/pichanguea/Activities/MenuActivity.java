@@ -73,7 +73,7 @@ public class MenuActivity extends AppCompatActivity
         jh.getInformacion(resultado,usuario );
 
 
-        new partidosGet(this).execute(getResources().getString(R.string.servidor)+"api/Jugador/1/Partidos/");
+        new partidosGet(this).execute(getResources().getString(R.string.servidor)+"api/Jugador/10003/Partidos/");
 
 
 

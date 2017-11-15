@@ -50,7 +50,7 @@ public class JsonHandler {
             String actor;
             for (int i = 0; i < ja.length(); i++) {
                 JSONObject row = ja.getJSONObject(i);
-                actor =row.getJSONObject("partido").getJSONObject("equipo").getString("equNombre")+"@#"+row.getJSONObject("partido").getJSONObject("tipoPartido").getString("tpaNombre")+"@#"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Dia")+"/"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Mes")+"/"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Año");
+                actor =row.getJSONObject("partido").getJSONObject("equipo").getString("equNombre")+"@#"+row.getJSONObject("partido").getJSONObject("tipoPartido").getString("tpaNombre")+"@#"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Dia")+"/"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Mes")+"/"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Año")+"@#"+row.getString("asistencia");
                 result[i] = actor;
                 System.out.println(actor);
 

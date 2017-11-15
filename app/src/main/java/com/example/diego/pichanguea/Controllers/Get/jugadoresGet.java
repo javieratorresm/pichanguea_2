@@ -40,10 +40,13 @@ public class jugadoresGet extends AsyncTask<String, Void, String> {
             connection.connect();
             return new Scanner(connection.getInputStream(), "UTF-8").useDelimiter("\\A").next();
         } catch (MalformedURLException e) {
+            System.out.println("aca1");
             Log.e("ERROR", this.getClass().toString() + " " + e.toString());
         } catch (ProtocolException e) {
+            System.out.println("aca2");
             Log.e("ERROR", this.getClass().toString() + " " + e.toString());
         } catch (IOException e) {
+            System.out.println("aca3");
             Log.e("ERROR", this.getClass().toString() + " " + e.toString());
         }
         return null;

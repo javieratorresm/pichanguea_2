@@ -38,7 +38,6 @@ public class AdapterJugador extends ArrayAdapter<String> {
         TextView nombreJugador = (TextView) rowView.findViewById(R.id.nombreJugadorList);
         TextView textGalleta=(TextView) rowView.findViewById(R.id.numeroGalletas);
 
-        System.out.println(values[position]);
 
         separado=values[position].split("@#");
         galleta=Math.round(Float.valueOf(separado[1]));

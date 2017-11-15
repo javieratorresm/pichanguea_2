@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.diego.pichanguea.Classes.AdapterJugador;
+import com.example.diego.pichanguea.Controllers.Get.Post.confirmarPost;
 import com.example.diego.pichanguea.Controllers.Get.jugadoresGet;
 import com.example.diego.pichanguea.Controllers.Get.partidosGet;
 import com.example.diego.pichanguea.Models.Equipo;
@@ -43,6 +44,7 @@ public class InfoPartidoActivity extends AppCompatActivity {
     private String info;
     String resultado;
     private int numeroJugadores;
+    private String idUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,7 @@ public class InfoPartidoActivity extends AppCompatActivity {
         layoutAnimado = (LinearLayout) findViewById(R.id.confirmacion);
         info=getIntent().getExtras().getString("info");
         int posicion=Integer.parseInt(getIntent().getExtras().getString("posicion"));
-        String idUsuario=getIntent().getExtras().getString("idUsuario");
+        idUsuario=getIntent().getExtras().getString("idUsuario");
         resultado=getIntent().getExtras().getString("parametro");
         usuario.setId(String.valueOf(Math.round(Float.valueOf(idUsuario))));
         jh.getPartido(info,posicion,partido,tipoPartido,equipo);
@@ -89,8 +91,9 @@ public class InfoPartidoActivity extends AppCompatActivity {
             animar(true);
             layoutAnimado.setVisibility(View.VISIBLE);
         }
-        //new jugadoresGet(this).execute(getResources().getString(R.string.servidor)+"api/jugador/"+usuario.getId()+"/Partido/"+partido.getIdPartido()+"/jugadores/confirmados");
-        new jugadoresGet(this).execute(getResources().getString(R.string.servidor)+"api/partido/195/jugadores/confirmados");
+        System.out.println("idPartido="+partido.getIdPartido());
+
+        new jugadoresGet(this).execute(getResources().getString(R.string.servidor)+"api/partido/241/jugadores/confirmados");
 
 
 
@@ -115,6 +118,9 @@ public class InfoPartidoActivity extends AppCompatActivity {
             animar(false);
             layoutAnimado.setVisibility(view.GONE);
         }
+        new confirmarPost().execute(getResources().getString(R.string.servidor)+"api/Jugador/10009/Partidos/241/Confirmar/1/Galletas/2","");
+
+
 
     }
     private void animar(boolean mostrar)
