@@ -1,29 +1,21 @@
 package com.example.diego.pichanguea.Activities;
 
 import android.content.Intent;
-import android.icu.text.DateFormat;
-import android.icu.text.SimpleDateFormat;
-import android.media.Image;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.LayoutAnimationController;
 import android.view.animation.TranslateAnimation;
-import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.diego.pichanguea.Classes.AdapterJugador;
 import com.example.diego.pichanguea.Controllers.Get.Post.confirmarPost;
-import com.example.diego.pichanguea.Controllers.Get.jugadoresGet;
-import com.example.diego.pichanguea.Controllers.Get.partidosGet;
+import com.example.diego.pichanguea.Controllers.Get.Put.modificarAsistenciaPut;
+import com.example.diego.pichanguea.Controllers.Get.Get.jugadoresGet;
 import com.example.diego.pichanguea.Models.Equipo;
 import com.example.diego.pichanguea.Models.Partido;
 import com.example.diego.pichanguea.Models.TipoPartido;
@@ -40,11 +32,13 @@ public class InfoPartidoActivity extends AppCompatActivity {
     JsonHandler jh= new JsonHandler();
     String asistencia;
     private LinearLayout layoutAnimado;
+    private LinearLayout layoutCancelar;
     private int cantidadGalletas=0;
     private String info;
     String resultado;
     private int numeroJugadores;
     private String idUsuario;
+    private AdapterJugador adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +57,7 @@ public class InfoPartidoActivity extends AppCompatActivity {
         TextView canchaView=(TextView) findViewById(R.id.textCancha);
         TextView equipoView=(TextView) findViewById(R.id.textNombreEquipo);
         TextView horaView=(TextView) findViewById(R.id.textHora);
+        layoutCancelar=(LinearLayout) findViewById(R.id.layoutCancelar);
 
         TextView textCantidadGalletas=(TextView)findViewById(R.id.textCantidadGalletas);
         textCantidadGalletas.setText(String.valueOf(cantidadGalletas));
@@ -86,14 +81,17 @@ public class InfoPartidoActivity extends AppCompatActivity {
         }
 
         //Codigo verificar si aun no acepta
-        if (layoutAnimado.getVisibility() == View.GONE)
-        {
-            animar(true);
-            layoutAnimado.setVisibility(View.VISIBLE);
-        }
-        System.out.println("idPartido="+partido.getIdPartido());
+        if (!partido.getAsistencia().equals("1.0")) {
+            if (layoutAnimado.getVisibility() == View.GONE) {
+                animar(true);
+                layoutAnimado.setVisibility(View.VISIBLE);
+            }
+            layoutCancelar.setVisibility(View.INVISIBLE);
 
-        new jugadoresGet(this).execute(getResources().getString(R.string.servidor)+"api/partido/241/jugadores/confirmados");
+        }
+
+
+        new jugadoresGet(this).execute(getResources().getString(R.string.servidor)+"api/partido/"+partido.getIdPartido()+"/jugadores/confirmados");
 
 
 
@@ -118,8 +116,16 @@ public class InfoPartidoActivity extends AppCompatActivity {
             animar(false);
             layoutAnimado.setVisibility(view.GONE);
         }
-        new confirmarPost().execute(getResources().getString(R.string.servidor)+"api/Jugador/10009/Partidos/241/Confirmar/1/Galletas/2","");
+        if(partido.getAsistencia().equals("2.0")) {
+            new confirmarPost().execute(getResources().getString(R.string.servidor) + "api/Jugador/" + idUsuario + "/Partidos/" + partido.getIdPartido() + "/Confirmar/1/Galletas/" + Integer.toString(cantidadGalletas), "");
+            new jugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
+        }
+        else if (partido.getAsistencia().equals("0.0")) {
+            new modificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+idUsuario+"/Partidos/"+partido.getIdPartido()+"/Confirmar/1/Galletas/"+Integer.toString(cantidadGalletas),"");
+            new jugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
 
+        }
+        layoutCancelar.setVisibility(View.VISIBLE);
 
 
     }
@@ -163,16 +169,26 @@ public class InfoPartidoActivity extends AppCompatActivity {
     }
 
     public void mostrarJugadores(String result) {
-        String[] jugadoresPartido=jh.getJugadores(result);
-        ListView listaJugadores=(ListView)findViewById(R.id.listaJugadores);
-        //ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.elemento_jugador,R.id.nombreJugadorList,jugadoresPartido);
-        AdapterJugador adapter = new AdapterJugador(this,jugadoresPartido,numeroJugadores);
-        listaJugadores.setAdapter(adapter);
+        if (result!=null){
+            String[] jugadoresPartido=jh.getJugadores(result);
+            ListView listaJugadores=(ListView)findViewById(R.id.listaJugadores);
+            adapter = new AdapterJugador(this,jugadoresPartido,numeroJugadores);
+            listaJugadores.setAdapter(adapter);
+        }
+
+
     }
 
     public void abrirChat(View view) {
 
         Intent act=new Intent(this,ChatActivity.class);
+        startActivity(act);
+    }
+
+    public void cancelarAsistencia(View view) {
+        new modificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+idUsuario+"/Partidos/"+partido.getIdPartido()+"/Confirmar/0","");
+        Intent act=new Intent(this,MenuActivity.class);
+        act.putExtra("parametro", resultado);
         startActivity(act);
     }
 }

@@ -2,26 +2,19 @@ package com.example.diego.pichanguea.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.diego.pichanguea.Classes.AdapterPartido;
-import com.example.diego.pichanguea.Controllers.Get.jugadoresGet;
-import com.example.diego.pichanguea.Controllers.Get.partidosGet;
-import com.example.diego.pichanguea.Controllers.Get.sesionGet;
+import com.example.diego.pichanguea.Controllers.Get.Get.partidosGet;
 import com.example.diego.pichanguea.Models.Partido;
 import com.example.diego.pichanguea.Models.Usuario;
 import com.example.diego.pichanguea.R;
@@ -73,7 +66,7 @@ public class MenuActivity extends AppCompatActivity
         jh.getInformacion(resultado,usuario );
 
 
-        new partidosGet(this).execute(getResources().getString(R.string.servidor)+"api/Jugador/10003/Partidos/");
+        new partidosGet(this).execute(getResources().getString(R.string.servidor)+"api/Jugador/"+usuario.getId()+"/Partidos");
 
 
 
@@ -143,6 +136,7 @@ public class MenuActivity extends AppCompatActivity
         String[] listaPartidos=jh.getPartidos(result);
         ListView simpleList = (ListView) findViewById(R.id.listPartidos);
         //ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.listview_layout,R.id.textView,listaPartidos);
+
         AdapterPartido adapter=new AdapterPartido(this,listaPartidos);
         final Intent act=new Intent(this,InfoPartidoActivity.class);
 

@@ -1,9 +1,10 @@
-package com.example.diego.pichanguea.Controllers.Get;
+package com.example.diego.pichanguea.Controllers.Get.Get;
 
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.diego.pichanguea.Activities.InfoPartidoActivity;
 import com.example.diego.pichanguea.Activities.MenuActivity;
 import com.example.diego.pichanguea.Models.Usuario;
 import com.example.diego.pichanguea.Utilities.SSLTrust;
@@ -19,12 +20,12 @@ import java.util.Scanner;
  * Created by diego on 05-10-2017.
  */
 
-public class partidosGet extends AsyncTask<String, Void, String> {
+public class jugadoresGet extends AsyncTask<String, Void, String> {
     private SSLTrust sT;
-    private MenuActivity menu_activity;
+    private InfoPartidoActivity infoPartidoActivity;
     Toast toast;
-    public partidosGet(MenuActivity menu_activity){
-        this.menu_activity=menu_activity;
+    public jugadoresGet(InfoPartidoActivity infoPartidoActivity){
+        this.infoPartidoActivity=infoPartidoActivity;
     }
     @Override
     protected String doInBackground(String...url) {
@@ -40,6 +41,7 @@ public class partidosGet extends AsyncTask<String, Void, String> {
             return new Scanner(connection.getInputStream(), "UTF-8").useDelimiter("\\A").next();
         } catch (MalformedURLException e) {
             Log.e("ERROR", this.getClass().toString() + " " + e.toString());
+
         } catch (ProtocolException e) {
             Log.e("ERROR", this.getClass().toString() + " " + e.toString());
         } catch (IOException e) {
@@ -48,6 +50,12 @@ public class partidosGet extends AsyncTask<String, Void, String> {
         return null;
     }// doInBackground(String... urls)
     protected void onPostExecute(String result) {
-        menu_activity.mostrarPartidos(result);
+        if (result != null) {
+            infoPartidoActivity.mostrarJugadores(result);
+        }
+
+
+
+
     }
 }

@@ -24,30 +24,36 @@
     </android.support.design.widget.AppBarLayout>
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listMensajes">
+        android:layout_height="468dp"
+        android:id="@+id/listMensajes"
 
-
-    </ListView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
         >
 
 
+
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center|bottom"
+        android:orientation="horizontal">
+
+
         <EditText
-            android:id="@+id/textMensaje"
+            android:id="@+id/editMensaje"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/botonEnviar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:text="Enviar" />
+            android:text="Enviar"
+            android:onClick="enviarMensaje"/>
 
 
     </LinearLayout>

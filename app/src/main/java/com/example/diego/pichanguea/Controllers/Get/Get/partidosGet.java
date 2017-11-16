@@ -1,10 +1,9 @@
-package com.example.diego.pichanguea.Controllers.Get;
+package com.example.diego.pichanguea.Controllers.Get.Get;
 
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.diego.pichanguea.Activities.InfoPartidoActivity;
 import com.example.diego.pichanguea.Activities.MenuActivity;
 import com.example.diego.pichanguea.Models.Usuario;
 import com.example.diego.pichanguea.Utilities.SSLTrust;
@@ -20,12 +19,12 @@ import java.util.Scanner;
  * Created by diego on 05-10-2017.
  */
 
-public class jugadoresGet extends AsyncTask<String, Void, String> {
+public class partidosGet extends AsyncTask<String, Void, String> {
     private SSLTrust sT;
-    private InfoPartidoActivity infoPartidoActivity;
+    private MenuActivity menu_activity;
     Toast toast;
-    public jugadoresGet(InfoPartidoActivity infoPartidoActivity){
-        this.infoPartidoActivity=infoPartidoActivity;
+    public partidosGet(MenuActivity menu_activity){
+        this.menu_activity=menu_activity;
     }
     @Override
     protected String doInBackground(String...url) {
@@ -40,19 +39,15 @@ public class jugadoresGet extends AsyncTask<String, Void, String> {
             connection.connect();
             return new Scanner(connection.getInputStream(), "UTF-8").useDelimiter("\\A").next();
         } catch (MalformedURLException e) {
-            System.out.println("aca1");
             Log.e("ERROR", this.getClass().toString() + " " + e.toString());
         } catch (ProtocolException e) {
-            System.out.println("aca2");
             Log.e("ERROR", this.getClass().toString() + " " + e.toString());
         } catch (IOException e) {
-            System.out.println("aca3");
             Log.e("ERROR", this.getClass().toString() + " " + e.toString());
         }
         return null;
     }// doInBackground(String... urls)
     protected void onPostExecute(String result) {
-        infoPartidoActivity.mostrarJugadores(result);
-
+        menu_activity.mostrarPartidos(result);
     }
 }

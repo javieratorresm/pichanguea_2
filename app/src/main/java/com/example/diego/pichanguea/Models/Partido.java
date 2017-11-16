@@ -23,11 +23,20 @@ public class Partido {
     String parRival;
     String parUbicacion;
     int numeroGalletas;
+    String asistencia;
 
 
 
     public Partido() {
 
+    }
+
+    public String getAsistencia() {
+        return asistencia;
+    }
+
+    public void setAsistencia(String asistencia) {
+        this.asistencia = asistencia;
     }
 
     public String getParDia() {

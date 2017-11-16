@@ -1,4 +1,4 @@
-package com.example.diego.pichanguea.Controllers.Get;
+package com.example.diego.pichanguea.Controllers.Get.Get;
 
 import android.os.AsyncTask;
 import android.util.Log;

@@ -1,4 +1,4 @@
-package com.example.diego.pichanguea.Controllers.Get;
+package com.example.diego.pichanguea.Controllers.Get.Get;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -47,8 +47,7 @@ public class sesionGet extends AsyncTask<String, Void, String>  {
     }// doInBackground(String... urls)
     protected void onPostExecute(String result) {
 
-        System.out.println(result);
-        //JsonHandler jh= new JsonHandler();
+
 
         login_activity.logear(result);
     }

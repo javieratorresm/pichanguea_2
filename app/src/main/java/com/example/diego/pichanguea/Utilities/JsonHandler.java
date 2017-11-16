@@ -30,7 +30,7 @@ public class JsonHandler {
             usuario.setCelular(jo.getJSONObject("jugador").getString("jugFono"));
             usuario.setMail(jo.getJSONObject("jugador").getString("jugEmail"));
             usuario.setApodo(jo.getJSONObject("jugador").getString("jugApodo"));
-            usuario.setId(jo.getJSONObject("jugador").getString("idJugador"));
+            usuario.setId(String.valueOf(Math.round(Float.valueOf(jo.getJSONObject("jugador").getString("idJugador")))));
             usuario.setToken(jo.getString("token"));
 
 
@@ -50,9 +50,9 @@ public class JsonHandler {
             String actor;
             for (int i = 0; i < ja.length(); i++) {
                 JSONObject row = ja.getJSONObject(i);
-                actor =row.getJSONObject("partido").getJSONObject("equipo").getString("equNombre")+"@#"+row.getJSONObject("partido").getJSONObject("tipoPartido").getString("tpaNombre")+"@#"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Dia")+"/"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Mes")+"/"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Año")+"@#"+row.getString("asistencia");
+                actor =row.getJSONObject("partido").getJSONObject("equipo").getString("equNombre")+"@#"+row.getJSONObject("partido").getJSONObject("tipoPartido").getString("tpaNombre")+"@#"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Dia")+"/"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Mes")+"/"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Año")+"@#"+row.getString("asistencia")+"@#"+row.getJSONObject("partido").getString("idPartido");
                 result[i] = actor;
-                System.out.println(actor);
+
 
             }
             return result;
@@ -61,6 +61,24 @@ public class JsonHandler {
         }
         return null;
 
+    }
+    public String[] getChat(String datos){
+        try { JSONArray ja = new JSONArray(datos);
+            String[] result = new String[ja.length()];
+            String actor;
+            for (int i = 0; i < ja.length(); i++) {
+                JSONObject row = ja.getJSONObject(i);
+                actor =row.getJSONObject("autor").getString("jugUsername")+"@#"+row.getString("contenidoMensaje");
+                result[i] = actor;
+                System.out.println(actor);
+
+            }
+            return result;
+        } catch (JSONException e) {
+            Log.e("ERROR", this.getClass().toString() + " " + e.toString());
+        }
+
+        return null;
     }
     public String[] getJugadores(String datos){
         try {
@@ -120,6 +138,7 @@ public class JsonHandler {
             partido.setParDia(row.getJSONObject("partido").getJSONObject("parFecha").getString("Dia"));
             partido.setParMes(row.getJSONObject("partido").getJSONObject("parFecha").getString("Mes"));
             partido.setParAno(row.getJSONObject("partido").getJSONObject("parFecha").getString("Año"));
+            partido.setAsistencia(row.getString("asistencia"));
 
             partido.setParHora(row.getJSONObject("partido").getString("parHora"));
 
@@ -148,6 +167,7 @@ public class JsonHandler {
         }
 
     }
+
 
 
     public JSONObject setRegister(Usuario usuario) {

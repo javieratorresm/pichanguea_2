@@ -9,10 +9,16 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.diego.pichanguea.Classes.AdapterChat;
+import com.example.diego.pichanguea.Controllers.Get.Get.jugadoresGet;
+import com.example.diego.pichanguea.Controllers.Get.Get.mensajesGet;
+import com.example.diego.pichanguea.Controllers.Get.Post.confirmarPost;
+import com.example.diego.pichanguea.Controllers.Get.Post.enviarMensajePost;
 import com.example.diego.pichanguea.R;
+import com.example.diego.pichanguea.Utilities.JsonHandler;
 
 public class ChatActivity extends AppCompatActivity {
-
+    private AdapterChat adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,24 +26,25 @@ public class ChatActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Chat del partido");
-
-        String[] values = new String[] {
-                "Pedro: Cuando es?",
-                "Juan:Que hay que llevar?",
-                "Diego:mensaje de prueba",
-                "Diego:otro mensaje de prueba",
-                "Claudio: no podré ir",
-                ""
-        };
-        ListView listaMensajes=(ListView)findViewById(R.id.listMensajes);
-        ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.elemento_mensaje,R.id.nombreMensaje,values);
-
-        listaMensajes.setAdapter(adapter);
+        new mensajesGet(this).execute(getResources().getString(R.string.servidor)+"api/partido/219/chat");
 
 
     }
 
     public void mostrarMensajes(String result) {
+        System.out.println(result);
+        JsonHandler jh=new JsonHandler();
+        String[] listaMensajes=jh.getChat(result);
+        ListView mensajesListView=(ListView)findViewById(R.id.listMensajes);
+
+        adapter=new AdapterChat(this,listaMensajes);
+        mensajesListView.setAdapter(adapter);
+
+    }
+
+    public void enviarMensaje(View view) {
+        new enviarMensajePost().execute(getResources().getString(R.string.servidor) + "api/Jugador/10016/Partidos/219/Chat", "{contenidoMensaje: sample string 1}");
+
     }
 
     /*public void mostrarMensajes(String result) {

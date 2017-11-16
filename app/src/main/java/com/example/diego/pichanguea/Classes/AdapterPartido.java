@@ -36,10 +36,9 @@ public class AdapterPartido extends ArrayAdapter<String> {
         TextView textnombreTipoPartido=(TextView) rowView.findViewById(R.id.idNombreTipoPartido);
         TextView textFecha=(TextView) rowView.findViewById(R.id.idFechaPartido);
         asistencia=separado[3];
-        textNombreEquipo.setText(separado[0]);
+        textNombreEquipo.setText(separado[0]+" "+separado[4]);
         textnombreTipoPartido.setText(separado[1]);
         textFecha.setText(separado[2]);
-        System.out.println("asistencia= "+asistencia);
         if (asistencia.equals("2.0")) {rowView.setBackgroundColor(Color.parseColor("#fff200"));}
         else if(asistencia.equals("1.0")){rowView.setBackgroundColor(Color.parseColor("#3ee210"));}
         else if(asistencia.equals("0.0")){rowView.setBackgroundColor(Color.parseColor("#ff0004"));}

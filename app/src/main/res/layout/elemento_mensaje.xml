@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/shape"
+    android:paddingLeft="18dp"
+    android:paddingRight="18dp"
+    android:paddingBottom="3dp"
     >
     <TextView
-        android:id="@+id/nombreMensaje"
+        android:id="@+id/nombreJugador"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#000000"
-        android:textSize="12sp"
+        android:textSize="15sp"
         android:text=""
+
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#000000"
-        android:textSize="12sp"
-        android:id="@+id/nombreMensaje2"
-        android:layout_toRightOf="@id/nombreMensaje"
+        android:textSize="14sp"
+        android:id="@+id/textoMensaje"
+
+        android:layout_toEndOf="@id/nombreJugador"
         />
 
 
-</RelativeLayout>
+</LinearLayout>
