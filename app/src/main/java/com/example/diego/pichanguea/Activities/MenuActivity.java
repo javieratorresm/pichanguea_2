@@ -22,7 +22,7 @@ import com.example.diego.pichanguea.Utilities.JsonHandler;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    Partido partido=new Partido();
+
     Usuario usuario = new Usuario();
     String resultado;
     @Override
@@ -30,35 +30,13 @@ public class MenuActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_menu);
+        System.out.println("antes toolbar");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
+        setSupportActionBar(toolbar);
+        System.out.println("despues toolbar");
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Tus Partidos");
 
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        */
-
-        /*
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        */
-        //ListView simpleList;
-
-        //View header=navigationView.getHeaderView(0);
         resultado=getIntent().getExtras().getString("parametro");
         JsonHandler jh= new JsonHandler();
 
@@ -149,14 +127,9 @@ public class MenuActivity extends AppCompatActivity
             {
 
                 act.putExtra("info",result);
-                System.out.println(result);
-
                 act.putExtra("posicion",String.valueOf(arg2));
-                System.out.println(String.valueOf(arg2));
                 act.putExtra("idUsuario",usuario.getId());
-                System.out.println(usuario.getId());
                 act.putExtra("parametro",resultado);
-                System.out.println(resultado);
                 startActivity(act);
                 finish();
             }

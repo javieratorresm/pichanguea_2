@@ -139,6 +139,7 @@ public class JsonHandler {
             partido.setParMes(row.getJSONObject("partido").getJSONObject("parFecha").getString("Mes"));
             partido.setParAno(row.getJSONObject("partido").getJSONObject("parFecha").getString("Año"));
             partido.setAsistencia(row.getString("asistencia"));
+            partido.setGalletasCarga(Math.round(Float.valueOf(row.getString("galletas"))));
 
             partido.setParHora(row.getJSONObject("partido").getString("parHora"));
 

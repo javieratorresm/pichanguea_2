@@ -1,5 +1,6 @@
 package com.example.diego.pichanguea.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +11,9 @@ import android.view.animation.LayoutAnimationController;
 import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.diego.pichanguea.Classes.AdapterJugador;
 import com.example.diego.pichanguea.Controllers.Get.Post.confirmarPost;
@@ -33,12 +36,14 @@ public class InfoPartidoActivity extends AppCompatActivity {
     String asistencia;
     private LinearLayout layoutAnimado;
     private LinearLayout layoutCancelar;
+    private RelativeLayout layoutModificarGalletas;
     private int cantidadGalletas=0;
     private String info;
     String resultado;
     private int numeroJugadores;
     private String idUsuario;
     private AdapterJugador adapter;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,8 @@ public class InfoPartidoActivity extends AppCompatActivity {
         TextView equipoView=(TextView) findViewById(R.id.textNombreEquipo);
         TextView horaView=(TextView) findViewById(R.id.textHora);
         layoutCancelar=(LinearLayout) findViewById(R.id.layoutCancelar);
+        layoutModificarGalletas=(RelativeLayout) findViewById(R.id.layoutModificarGalleta);
+        TextView cantidadGalletas2=(TextView)findViewById(R.id.textCantidadGalletas2);
 
         TextView textCantidadGalletas=(TextView)findViewById(R.id.textCantidadGalletas);
         textCantidadGalletas.setText(String.valueOf(cantidadGalletas));
@@ -86,8 +93,14 @@ public class InfoPartidoActivity extends AppCompatActivity {
                 animar(true);
                 layoutAnimado.setVisibility(View.VISIBLE);
             }
+
+            layoutModificarGalletas.setVisibility(View.INVISIBLE);
             layoutCancelar.setVisibility(View.INVISIBLE);
 
+        }
+        else{
+            cantidadGalletas=partido.getGalletasCarga();
+            cantidadGalletas2.setText(Integer.toString(cantidadGalletas));
         }
 
 
@@ -119,12 +132,17 @@ public class InfoPartidoActivity extends AppCompatActivity {
         if(partido.getAsistencia().equals("2.0")) {
             new confirmarPost().execute(getResources().getString(R.string.servidor) + "api/Jugador/" + idUsuario + "/Partidos/" + partido.getIdPartido() + "/Confirmar/1/Galletas/" + Integer.toString(cantidadGalletas), "");
             new jugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
+            partido.setAsistencia("1.0");
         }
         else if (partido.getAsistencia().equals("0.0")) {
             new modificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+idUsuario+"/Partidos/"+partido.getIdPartido()+"/Confirmar/1/Galletas/"+Integer.toString(cantidadGalletas),"");
             new jugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
+            partido.setAsistencia("1.0");
 
         }
+        TextView textCantidadGalletas2=(TextView)findViewById(R.id.textCantidadGalletas2);
+        textCantidadGalletas2.setText(Integer.toString(cantidadGalletas));
+        layoutModificarGalletas.setVisibility(View.VISIBLE);
         layoutCancelar.setVisibility(View.VISIBLE);
 
 
@@ -153,19 +171,25 @@ public class InfoPartidoActivity extends AppCompatActivity {
 
     public void aumentarGalleta(View view) {
         TextView textCantidadGalletas=(TextView)findViewById(R.id.textCantidadGalletas);
+        TextView textCantidadGalletas2=(TextView)findViewById(R.id.textCantidadGalletas2);
         cantidadGalletas+=1;
         textCantidadGalletas.setText(String.valueOf(cantidadGalletas));
+        textCantidadGalletas2.setText(String.valueOf(cantidadGalletas));
+
 
 
     }
 
     public void restarGalleta(View view) {
         TextView textCantidadGalletas=(TextView)findViewById(R.id.textCantidadGalletas);
+        TextView textCantidadGalletas2=(TextView)findViewById(R.id.textCantidadGalletas2);
         if(cantidadGalletas>0){
             cantidadGalletas-=1;
 
         }
         textCantidadGalletas.setText(String.valueOf(cantidadGalletas));
+        textCantidadGalletas2.setText(String.valueOf(cantidadGalletas));
+
     }
 
     public void mostrarJugadores(String result) {
@@ -180,9 +204,20 @@ public class InfoPartidoActivity extends AppCompatActivity {
     }
 
     public void abrirChat(View view) {
+        if(!partido.getAsistencia().equals("2.0")) {
+            Intent act = new Intent(this, ChatActivity.class);
+            act.putExtra("idUsuario", usuario.getId());
+            act.putExtra("idPartido", partido.getIdPartido());
+            startActivity(act);
+        }
+        else{
+            context = getApplicationContext();
+            CharSequence text = "Aun no confirmas asistencia...";
+            int duration = Toast.LENGTH_SHORT;
 
-        Intent act=new Intent(this,ChatActivity.class);
-        startActivity(act);
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
     }
 
     public void cancelarAsistencia(View view) {

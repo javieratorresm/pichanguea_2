@@ -24,11 +24,20 @@ public class Partido {
     String parUbicacion;
     int numeroGalletas;
     String asistencia;
+    int galletasCarga;
 
 
 
     public Partido() {
 
+    }
+
+    public int getGalletasCarga() {
+        return galletasCarga;
+    }
+
+    public void setGalletasCarga(int galletasCarga) {
+        this.galletasCarga = galletasCarga;
     }
 
     public String getAsistencia() {

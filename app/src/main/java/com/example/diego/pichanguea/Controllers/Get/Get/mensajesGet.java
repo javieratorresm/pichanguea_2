@@ -50,6 +50,7 @@ public class mensajesGet extends AsyncTask<String, Void, String> {
         return null;
     }// doInBackground(String... urls)
     protected void onPostExecute(String result) {
+        System.out.println("result= "+result);
         chatActivity.mostrarMensajes(result);
 
     }

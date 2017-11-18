@@ -24,6 +24,11 @@ public class enviarMensajePost extends AsyncTask<String, Void, String> {
     Toast toast;
     Context context;
     int duration;
+
+    public enviarMensajePost(ChatActivity chatActivity) {
+        this.chatActivity = chatActivity;
+    }
+
     @Override
     protected String doInBackground(String... parametros) {
 
@@ -51,7 +56,7 @@ public class enviarMensajePost extends AsyncTask<String, Void, String> {
     }
     @Override
     protected void onPostExecute(String result) {
-        System.out.println(result);
+        chatActivity.informarMensajeEnviado(result);
 
 
 
