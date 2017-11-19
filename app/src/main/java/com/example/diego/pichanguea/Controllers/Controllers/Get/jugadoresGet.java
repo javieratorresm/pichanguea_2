@@ -1,14 +1,12 @@
-package com.example.diego.pichanguea.Controllers.Get.Get;
+package com.example.diego.pichanguea.Controllers.Controllers.Get;
 
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.diego.pichanguea.Activities.InfoPartidoActivity;
-import com.example.diego.pichanguea.Activities.MenuActivity;
-import com.example.diego.pichanguea.Models.Usuario;
 import com.example.diego.pichanguea.Utilities.SSLTrust;
-import com.example.diego.pichanguea.Utilities.JsonHandler;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -49,6 +47,12 @@ public class jugadoresGet extends AsyncTask<String, Void, String> {
         }
         return null;
     }// doInBackground(String... urls)
+
+    @Override
+    protected void onProgressUpdate(Void... values) {
+        super.onProgressUpdate(values);
+    }
+
     protected void onPostExecute(String result) {
         if (result != null) {
             infoPartidoActivity.mostrarJugadores(result);

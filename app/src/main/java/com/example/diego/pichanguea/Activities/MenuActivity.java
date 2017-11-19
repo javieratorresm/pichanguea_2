@@ -14,8 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.diego.pichanguea.Classes.AdapterPartido;
-import com.example.diego.pichanguea.Controllers.Get.Get.partidosGet;
-import com.example.diego.pichanguea.Models.Partido;
+import com.example.diego.pichanguea.Controllers.Controllers.Get.partidosGet;
 import com.example.diego.pichanguea.Models.Usuario;
 import com.example.diego.pichanguea.R;
 import com.example.diego.pichanguea.Utilities.JsonHandler;
@@ -30,10 +29,10 @@ public class MenuActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_menu);
-        System.out.println("antes toolbar");
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        System.out.println("despues toolbar");
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Tus Partidos");
 
@@ -90,20 +89,7 @@ public class MenuActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
 
-        if (id == R.id.nav_equipos) {
-            // Handle the camera action
-        } else if (id == R.id.nav_solicitudes) {
-
-        } else if (id == R.id.nav_partidos) {
-
-        } else if (id == R.id.nav_sin_responder) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 

@@ -2,8 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
-    android:orientation="vertical" >
 
     <LinearLayout
         android:id="@+id/confirmacion"
@@ -74,6 +76,80 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:id="@+id/layoutModificarGalleta"
+        android:background="#d6d6d6"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:text="Modificar galletas "
+            android:textSize="10sp" />
+
+        <ImageButton
+            android:id="@+id/modificaButton"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="right"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ticket"
+            android:onClick="ModificarGalletasBoton"/>
+        <View
+            android:id="@+id/comodin2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/comodin2">
+            <ImageButton
+                android:id="@+id/menosButton2"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/remove"
+                android:onClick="restarGalleta"
+
+                />
+            <TextView
+                android:id="@+id/textCantidadGalletas2"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:text=""
+                android:textAlignment="center"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/menosButton2"
+                android:layout_marginTop="12dp" />
+            <ImageButton
+                android:id="@+id/masButton2"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_toRightOf="@id/textCantidadGalletas2"
+                android:scaleType="fitCenter"
+                android:src="@drawable/add"
+                android:onClick="aumentarGalleta"
+                />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -87,6 +163,14 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
+        <ImageButton
+            android:id="@+id/imageButtonActualizar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:scaleType="fitCenter"
+            android:src="@drawable/sync"
+            android:onClick="actualizarJugadores"/>
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="50dp"
@@ -208,15 +292,8 @@
             android:text=""
             />
     </LinearLayout>
-    <View
-        android:layout_width="0dp"
-        android:layout_height="10dp"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Modificar galletas"
-        android:gravity="center"/>
+
+
 
     <TextView
         android:layout_width="match_parent"
@@ -228,7 +305,7 @@
     <ListView
         android:id="@+id/listaJugadores"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
@@ -238,65 +315,9 @@
 
 
     </ListView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/layoutCancelar"
-        android:layout_alignParentBottom="true">
-
-        >
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/layoutModificarGalleta">
-            <ImageButton
-                android:id="@+id/menosButton2"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/remove"
-                android:onClick="restarGalleta"
-
-                />
-            <TextView
-                android:id="@+id/textCantidadGalletas2"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:text="0"
-                android:textAlignment="center"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/menosButton2"
-                android:layout_marginTop="12dp" />
-            <ImageButton
-                android:id="@+id/masButton2"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_toRightOf="@id/textCantidadGalletas2"
-                android:scaleType="fitCenter"
-                android:src="@drawable/add"
-                android:onClick="aumentarGalleta"
-                />
 
 
 
-        </RelativeLayout>
 
-        <ImageButton
-            android:id="@+id/cancelButton"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:src="@drawable/cancel"
-            android:scaleType="fitCenter"
-            android:gravity=""
-            android:onClick="cancelarAsistencia"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="13dp"
-            android:gravity="right"
-            android:text="Cancelar asistencia"
-            android:layout_toRightOf="@+id/cancelButton"/>
-
-    </LinearLayout>
 
 </LinearLayout>

@@ -1,13 +1,12 @@
-package com.example.diego.pichanguea.Controllers.Get.Get;
+package com.example.diego.pichanguea.Controllers.Controllers.Get;
 
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.diego.pichanguea.Activities.LoginActivity;
-
+import com.example.diego.pichanguea.Activities.ChatActivity;
 import com.example.diego.pichanguea.Utilities.SSLTrust;
-import com.example.diego.pichanguea.Utilities.JsonHandler;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -15,12 +14,16 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Scanner;
 
-public class sesionGet extends AsyncTask<String, Void, String>  {
-    //private SSLTrust sT;
-    private LoginActivity login_activity;
+/**
+ * Created by diego on 05-10-2017.
+ */
+
+public class mensajesGet extends AsyncTask<String, Void, String> {
+    private SSLTrust sT;
+    private ChatActivity chatActivity;
     Toast toast;
-    public sesionGet(LoginActivity login_activity){
-        this.login_activity=login_activity;
+    public mensajesGet(ChatActivity chatActivity){
+        this.chatActivity=chatActivity;
     }
     @Override
     protected String doInBackground(String...url) {
@@ -33,9 +36,7 @@ public class sesionGet extends AsyncTask<String, Void, String>  {
             connection.setRequestMethod("GET");
             connection.setDoInput(true);
             connection.connect();
-
             return new Scanner(connection.getInputStream(), "UTF-8").useDelimiter("\\A").next();
-
         } catch (MalformedURLException e) {
             Log.e("ERROR", this.getClass().toString() + " " + e.toString());
         } catch (ProtocolException e) {
@@ -46,9 +47,8 @@ public class sesionGet extends AsyncTask<String, Void, String>  {
         return null;
     }// doInBackground(String... urls)
     protected void onPostExecute(String result) {
+        System.out.println("result= "+result);
+        chatActivity.mostrarMensajes(result);
 
-
-
-        login_activity.logear(result);
     }
 }

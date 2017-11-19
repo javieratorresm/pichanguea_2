@@ -1,4 +1,4 @@
-package com.example.diego.pichanguea.Controllers.Get.Post;
+package com.example.diego.pichanguea.Controllers.Controllers.Put;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -13,15 +13,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by Diego on 15-11-2017.
+ * Created by Diego on 18-11-2017.
  */
 
-public class confirmarPost extends AsyncTask<String, Void, String> {
+public class modificarGalletasPut extends AsyncTask<String, Void, String> {
     private SSLTrust sT;
     private InfoPartidoActivity infoPartidoActivity;
     Toast toast;
-
-    @Override
     protected String doInBackground(String... parametros) {
 
         try {
@@ -30,7 +28,7 @@ public class confirmarPost extends AsyncTask<String, Void, String> {
             HttpURLConnection connection = (HttpURLConnection) u.openConnection();
             connection.setDoOutput(true);
             connection.setDoInput(true);
-            connection.setRequestMethod("POST");
+            connection.setRequestMethod("PUT");
             connection.setRequestProperty("Content-Type", "application/json;charset=utf-8");
             connection.setConnectTimeout(10000);
             connection.setReadTimeout(10000);
@@ -50,6 +48,4 @@ public class confirmarPost extends AsyncTask<String, Void, String> {
 
 
     }
-
 }
-

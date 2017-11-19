@@ -1,4 +1,4 @@
-package com.example.diego.pichanguea.Controllers.Get.Post;
+package com.example.diego.pichanguea.Controllers.Controllers.Post;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -6,7 +6,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.diego.pichanguea.Activities.ChatActivity;
-import com.example.diego.pichanguea.Activities.InfoPartidoActivity;
 import com.example.diego.pichanguea.Utilities.SSLTrust;
 
 import java.io.BufferedOutputStream;

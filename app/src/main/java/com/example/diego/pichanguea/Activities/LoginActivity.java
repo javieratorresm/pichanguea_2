@@ -30,7 +30,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.diego.pichanguea.Controllers.Get.Get.sesionGet;
+import com.example.diego.pichanguea.Controllers.Controllers.Get.sesionGet;
 import com.example.diego.pichanguea.R;
 
 import java.util.ArrayList;
