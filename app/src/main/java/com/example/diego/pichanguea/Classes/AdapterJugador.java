@@ -24,7 +24,15 @@ public class AdapterJugador extends ArrayAdapter<String> {
     String[] separado;
     int galleta;
 
-    public AdapterJugador(Context context, String[] values,int numeroJugadores) {
+    public int getJugadoresMasGalleta() {
+        return jugadoresMasGalleta;
+    }
+
+    public void setJugadoresMasGalleta(int jugadoresMasGalleta) {
+        this.jugadoresMasGalleta = jugadoresMasGalleta;
+    }
+
+    public AdapterJugador(Context context, String[] values, int numeroJugadores) {
         super(context, R.layout.elemento_jugador, values);
         this.context = context;
         this.values = values;
@@ -44,7 +52,10 @@ public class AdapterJugador extends ArrayAdapter<String> {
 
         nombreJugador.setText(separado[0]);
         jugadoresMasGalleta+=1+galleta;
+        System.out.println("jugadores mas galletas");
+        System.out.println(jugadoresMasGalleta);
         if(jugadoresMasGalleta<=numeroJugadores){
+
             nombreJugador.setBackgroundColor(Color.parseColor("#3ee210"));
         }
         else{

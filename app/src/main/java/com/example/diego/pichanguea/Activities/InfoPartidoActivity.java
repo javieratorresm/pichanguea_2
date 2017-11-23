@@ -35,6 +35,7 @@ public class InfoPartidoActivity extends AppCompatActivity {
     Equipo equipo=new Equipo();
     JsonHandler jh= new JsonHandler();
     String asistencia;
+    private String[] jugadoresPartido;
     private LinearLayout layoutAnimado;
 
     private LinearLayout layoutModificarGalletas;
@@ -148,6 +149,9 @@ public class InfoPartidoActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.itemModificarGalletas) {
+            ListView listaJugadores=(ListView)findViewById(R.id.listaJugadores);
+            adapter = new AdapterJugador(this,jugadoresPartido,numeroJugadores);
+            listaJugadores.setAdapter(adapter);
             if (layoutModificarGalletas.getVisibility() == View.GONE) {
                 animar(true,"modificar");
                 layoutModificarGalletas.setVisibility(View.VISIBLE);
@@ -205,10 +209,16 @@ public class InfoPartidoActivity extends AppCompatActivity {
         if(tipo.equals("confirmar")) {
             layoutAnimado.setLayoutAnimation(controller);
             layoutAnimado.startAnimation(animation);
+            ListView listaJugadores=(ListView)findViewById(R.id.listaJugadores);
+            adapter = new AdapterJugador(this,jugadoresPartido,numeroJugadores);
+            listaJugadores.setAdapter(adapter);
         }
         else if(tipo.equals("modificar")){
             layoutModificarGalletas.setLayoutAnimation(controller);
             layoutModificarGalletas.startAnimation(animation);
+            ListView listaJugadores=(ListView)findViewById(R.id.listaJugadores);
+            adapter = new AdapterJugador(this,jugadoresPartido,numeroJugadores);
+            listaJugadores.setAdapter(adapter);
         }
     }
 
@@ -237,7 +247,7 @@ public class InfoPartidoActivity extends AppCompatActivity {
 
     public void mostrarJugadores(String result) {
         if (result!=null){
-            String[] jugadoresPartido=jh.getJugadores(result);
+            jugadoresPartido=jh.getJugadores(result);
             ListView listaJugadores=(ListView)findViewById(R.id.listaJugadores);
             adapter = new AdapterJugador(this,jugadoresPartido,numeroJugadores);
             listaJugadores.setAdapter(adapter);
@@ -279,7 +289,9 @@ public class InfoPartidoActivity extends AppCompatActivity {
             layoutModificarGalletas.setVisibility(view.GONE);
 
         }
+
         new modificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+idUsuario+"/Partidos/"+partido.getIdPartido()+"/Galletas/"+Integer.toString(cantidadGalletas),"");
+
         new jugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
 
     }

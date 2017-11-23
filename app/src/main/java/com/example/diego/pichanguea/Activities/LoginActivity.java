@@ -163,7 +163,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     }
     private void attemptLogin() {
-        new sesionGet(this).execute(getResources().getString(R.string.servidor)+"api/Sesion?usuario=jquevedog&pass=qL0EXUkr/8sHV0xU/d5WZg==");
+        new sesionGet(this).execute(getResources().getString(R.string.servidor)+"api/Sesion?usuario=RubenX3M&pass=tdsL6tJThUoVbFrktWVnQQ==");
 
         if (mAuthTask != null) {
             return;
