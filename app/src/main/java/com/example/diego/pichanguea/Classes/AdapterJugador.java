@@ -19,27 +19,22 @@ import com.example.diego.pichanguea.R;
 public class AdapterJugador extends ArrayAdapter<String> {
     private final Context context;
     private final String[] values;
-    private final int numeroJugadores;
-    private int jugadoresMasGalleta=0;
+
     String[] separado;
     int galleta;
 
-    public int getJugadoresMasGalleta() {
-        return jugadoresMasGalleta;
-    }
 
-    public void setJugadoresMasGalleta(int jugadoresMasGalleta) {
-        this.jugadoresMasGalleta = jugadoresMasGalleta;
-    }
 
-    public AdapterJugador(Context context, String[] values, int numeroJugadores) {
+    public AdapterJugador(Context context, String[] values) {
         super(context, R.layout.elemento_jugador, values);
         this.context = context;
         this.values = values;
-        this.numeroJugadores=numeroJugadores;
+
+
 
     }
     public View getView(int position, View convertView, ViewGroup parent) {
+
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.elemento_jugador, parent, false);
@@ -48,18 +43,14 @@ public class AdapterJugador extends ArrayAdapter<String> {
 
 
         separado=values[position].split("@#");
-        galleta=Math.round(Float.valueOf(separado[1]));
-
         nombreJugador.setText(separado[0]);
-        jugadoresMasGalleta+=1+galleta;
-        System.out.println("jugadores mas galletas");
-        System.out.println(jugadoresMasGalleta);
-        if(jugadoresMasGalleta<=numeroJugadores){
+        galleta=Math.round(Float.valueOf(separado[1]));
+        if(separado[2].equals("1")){
 
             nombreJugador.setBackgroundColor(Color.parseColor("#3ee210"));
         }
         else{
-            nombreJugador.setBackgroundColor(Color.parseColor("#fff200"));
+           nombreJugador.setBackgroundColor(Color.parseColor("#fff200"));
         }
 
         if (galleta==0){

@@ -25,11 +25,20 @@ public class Partido {
     int numeroGalletas;
     String asistencia;
     int galletasCarga;
+    int cantidadJugadoresMasGalletas;
 
 
 
     public Partido() {
 
+    }
+
+    public int getCantidadJugadoresMasGalletas() {
+        return cantidadJugadoresMasGalletas;
+    }
+
+    public void setCantidadJugadoresMasGalletas(int cantidadJugadoresMasGalletas) {
+        this.cantidadJugadoresMasGalletas = cantidadJugadoresMasGalletas;
     }
 
     public int getGalletasCarga() {

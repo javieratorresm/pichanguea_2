@@ -144,6 +144,48 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/ventanaCancelar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#d6d6d6"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        >
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="¿Estas seguro?"
+                android:id="@+id/textEstasSeguro"
+                android:gravity="center"
+
+
+                />
+            <ImageButton
+                android:id="@+id/doneButton"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/done"
+                android:onClick="cancelarDone"
+                android:layout_toRightOf="@id/textEstasSeguro"/>
+            <ImageButton
+                android:id="@+id/cancelButton"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/clear"
+                android:onClick="cancelarCancel"
+                android:layout_toRightOf="@+id/doneButton"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+
 
 
 
@@ -305,7 +347,7 @@
     <ListView
         android:id="@+id/listaJugadores"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"

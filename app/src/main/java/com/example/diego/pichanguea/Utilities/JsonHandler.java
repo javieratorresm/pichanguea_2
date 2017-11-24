@@ -107,12 +107,10 @@ public class JsonHandler {
                     c+=1;
 
                 }
-
-
-
-
-
             }
+            System.out.println("datos");
+            System.out.println(c);
+            System.out.println(ja.length());
             return result;
         } catch (JSONException e) {
             Log.e("ERROR", this.getClass().toString() + " " + e.toString());
