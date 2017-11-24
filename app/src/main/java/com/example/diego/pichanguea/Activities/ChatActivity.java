@@ -73,14 +73,25 @@ public class ChatActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     public void mostrarMensajes(String result) {
+        if (result != null) {
 
-        JsonHandler jh=new JsonHandler();
-        String[] listaMensajes=jh.getChat(result);
-        ListView mensajesListView=(ListView)findViewById(R.id.listMensajes);
 
-        adapter=new AdapterChat(this,listaMensajes);
-        mensajesListView.setAdapter(adapter);
+            JsonHandler jh = new JsonHandler();
+            String[] listaMensajes = jh.getChat(result);
+            ListView mensajesListView = (ListView) findViewById(R.id.listMensajes);
 
+            adapter = new AdapterChat(this, listaMensajes);
+            mensajesListView.setAdapter(adapter);
+
+        }
+        else{
+            Context context = getApplicationContext();
+            CharSequence text = "No hay mensajes para mostrar!";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
     }
 
     public void enviarMensaje(View view) {

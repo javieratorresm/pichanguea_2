@@ -1,5 +1,6 @@
 package com.example.diego.pichanguea.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.diego.pichanguea.Classes.AdapterPartido;
 import com.example.diego.pichanguea.Controllers.Controllers.Get.partidosGet;
@@ -95,33 +97,42 @@ public class MenuActivity extends AppCompatActivity
 
 
     public void mostrarPartidos(final String result) {
+        if (result != null) {
+            JsonHandler jh = new JsonHandler();
+            String[] listaPartidos = jh.getPartidos(result);
+            ListView simpleList = (ListView) findViewById(R.id.listPartidos);
+            //ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.listview_layout,R.id.textView,listaPartidos);
 
-        JsonHandler jh= new JsonHandler();
-        String[] listaPartidos=jh.getPartidos(result);
-        ListView simpleList = (ListView) findViewById(R.id.listPartidos);
-        //ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.listview_layout,R.id.textView,listaPartidos);
+            AdapterPartido adapter = new AdapterPartido(this, listaPartidos);
+            final Intent act = new Intent(this, InfoPartidoActivity.class);
 
-        AdapterPartido adapter=new AdapterPartido(this,listaPartidos);
-        final Intent act=new Intent(this,InfoPartidoActivity.class);
+            simpleList.setAdapter(adapter);
 
-        simpleList.setAdapter(adapter);
+            simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-        simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
-            {
+                    act.putExtra("info", result);
+                    act.putExtra("posicion", String.valueOf(arg2));
+                    act.putExtra("idUsuario", usuario.getId());
+                    act.putExtra("parametro", resultado);
+                    startActivity(act);
+                    finish();
+                }
+            });
 
-                act.putExtra("info",result);
-                act.putExtra("posicion",String.valueOf(arg2));
-                act.putExtra("idUsuario",usuario.getId());
-                act.putExtra("parametro",resultado);
-                startActivity(act);
-                finish();
-            }
-        });
+        }
+        else{
+            Context context = getApplicationContext();
+            CharSequence text = "Fallo en la conexión!";
+            int duration = Toast.LENGTH_SHORT;
 
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
     }
+
 
 
 }

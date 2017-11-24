@@ -161,19 +161,41 @@ public class InfoPartidoActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.itemModificarGalletas) {
-            ListView listaJugadores=(ListView)findViewById(R.id.listaJugadores);
-            adapter = new AdapterJugador(this,jugadoresPartido);
-            listaJugadores.setAdapter(adapter);
+            if (partido.getAsistencia().equals("1.0")) {
+                ListView listaJugadores = (ListView) findViewById(R.id.listaJugadores);
+                adapter = new AdapterJugador(this, jugadoresPartido);
+                listaJugadores.setAdapter(adapter);
 
-            if (layoutModificarGalletas.getVisibility() == View.GONE) {
-                animar(true,"modificar");
-                layoutModificarGalletas.setVisibility(View.VISIBLE);
+                if (layoutModificarGalletas.getVisibility() == View.GONE) {
+                    animar(true, "modificar");
+                    layoutModificarGalletas.setVisibility(View.VISIBLE);
+                }
+
+                return true;
             }
+            else{
+                context = getApplicationContext();
+                CharSequence text = "Aun no confirmas asistencia";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+                return true;
 
-            return true;
+            }
         }
         else if(id == R.id.itemCancelarAsistencia){
-            cancelarAsistencia();
+            if(partido.getAsistencia().equals("1.0")){
+                cancelarAsistencia();
+            }
+            else{
+                context = getApplicationContext();
+                CharSequence text = "Aun no confirmas asistencia";
+                int duration = Toast.LENGTH_SHORT;
+                toast = Toast.makeText(context, text, duration);
+                toast.show();
+                return true;
+            }
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -244,19 +266,37 @@ public class InfoPartidoActivity extends AppCompatActivity {
     public void aumentarGalleta(View view) {
         TextView textCantidadGalletas=(TextView)findViewById(R.id.textCantidadGalletas);
         TextView textCantidadGalletas2=(TextView)findViewById(R.id.textCantidadGalletas2);
-        System.out.println(jugadoresMasGalletas);
-        System.out.println(numeroJugadores);
-        if(jugadoresMasGalletas<=numeroJugadores){
-            cantidadGalletas+=1;
-            jugadoresMasGalletas+=1;
-            textCantidadGalletas.setText(String.valueOf(cantidadGalletas));
-            textCantidadGalletas2.setText(String.valueOf(cantidadGalletas));
+        if(partido.getAsistencia().equals("1.0")) {
+            if (jugadoresMasGalletas < numeroJugadores) {
+
+                cantidadGalletas += 1;
+                jugadoresMasGalletas += 1;
+                textCantidadGalletas.setText(String.valueOf(cantidadGalletas));
+                textCantidadGalletas2.setText(String.valueOf(cantidadGalletas));
+            } else {
+                context = getApplicationContext();
+                CharSequence text = "No puedes agregar más galletas";
+                int duration = Toast.LENGTH_SHORT;
+                toast = Toast.makeText(context, text, duration);
+                toast.show();
+
+            }
         }
         else{
-            CharSequence text = "No puedes agregar más galletas";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+            if (jugadoresMasGalletas +1 < numeroJugadores) {
+
+                cantidadGalletas += 1;
+                jugadoresMasGalletas += 1;
+                textCantidadGalletas.setText(String.valueOf(cantidadGalletas));
+                textCantidadGalletas2.setText(String.valueOf(cantidadGalletas));
+            } else {
+                context = getApplicationContext();
+                CharSequence text = "No puedes agregar más galletas";
+                int duration = Toast.LENGTH_SHORT;
+                toast = Toast.makeText(context, text, duration);
+                toast.show();
+
+            }
 
         }
 
@@ -270,6 +310,7 @@ public class InfoPartidoActivity extends AppCompatActivity {
         TextView textCantidadGalletas2=(TextView)findViewById(R.id.textCantidadGalletas2);
         if(cantidadGalletas>0){
             cantidadGalletas-=1;
+            jugadoresMasGalletas-=1;
 
         }
         textCantidadGalletas.setText(String.valueOf(cantidadGalletas));

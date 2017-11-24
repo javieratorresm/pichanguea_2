@@ -3,6 +3,7 @@ package com.example.diego.pichanguea.Activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -29,6 +30,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.diego.pichanguea.Controllers.Controllers.Get.sesionGet;
 import com.example.diego.pichanguea.R;
@@ -157,9 +159,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
     public void logear(String result){
-        Intent act=new Intent(this,MenuActivity.class);
-        act.putExtra("parametro", result);
-        startActivity(act);
+        if (result!=null) {
+            Intent act = new Intent(this, MenuActivity.class);
+            act.putExtra("parametro", result);
+            startActivity(act);
+        }
+        else{
+            Context context = getApplicationContext();
+            CharSequence text = "Fallo en la conexión!";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
 
     }
     private void attemptLogin() {
