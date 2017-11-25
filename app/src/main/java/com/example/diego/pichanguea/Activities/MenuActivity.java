@@ -3,6 +3,7 @@ package com.example.diego.pichanguea.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,6 +21,7 @@ import com.example.diego.pichanguea.Controllers.Controllers.Get.partidosGet;
 import com.example.diego.pichanguea.Models.Usuario;
 import com.example.diego.pichanguea.R;
 import com.example.diego.pichanguea.Utilities.JsonHandler;
+import com.onesignal.OneSignal;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -37,6 +39,17 @@ public class MenuActivity extends AppCompatActivity
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Tus Partidos");
+
+        //one signal
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
+
+        // Call syncHashedEmail anywhere in your app if you have the user's email.
+        // This improves the effectiveness of OneSignal's "best-time" notification scheduling feature.
+        // OneSignal.syncHashedEmail(userEmail);
+
 
         resultado=getIntent().getExtras().getString("parametro");
         JsonHandler jh= new JsonHandler();
