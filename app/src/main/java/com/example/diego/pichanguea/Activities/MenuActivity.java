@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+=======
+>>>>>>> fd2a06d2b05bdb2b80410371520f14969201e819
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -28,11 +31,15 @@ import com.example.diego.pichanguea.Models.Usuario;
 import com.example.diego.pichanguea.R;
 import com.example.diego.pichanguea.Utilities.JsonHandler;
 import com.onesignal.OneSignal;
+<<<<<<< HEAD
 import com.example.diego.pichanguea.Classes.SectionsPageAdapter;
 import com.example.diego.pichanguea.Classes.Tab1Fragment;
 import com.example.diego.pichanguea.Classes.Tab2Fragment;
 import com.example.diego.pichanguea.Classes.Tab3Fragment;
 import com.example.diego.pichanguea.R;
+=======
+
+>>>>>>> fd2a06d2b05bdb2b80410371520f14969201e819
 public class MenuActivity extends AppCompatActivity
 
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -72,6 +79,17 @@ public class MenuActivity extends AppCompatActivity
         // Call syncHashedEmail anywhere in your app if you have the user's email.
         // This improves the effectiveness of OneSignal's "best-time" notification scheduling feature.
         // OneSignal.syncHashedEmail(userEmail);
+
+        //one signal
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
+
+        // Call syncHashedEmail anywhere in your app if you have the user's email.
+        // This improves the effectiveness of OneSignal's "best-time" notification scheduling feature.
+        // OneSignal.syncHashedEmail(userEmail);
+
 
         resultado=getIntent().getExtras().getString("parametro");
         JsonHandler jh= new JsonHandler();
