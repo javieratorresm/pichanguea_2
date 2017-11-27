@@ -3,7 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff0004</color>
-    <color name="colorVerde">#3ee210</color>
-    <color name="grisSuave">#d7d7d7</color>
+    <color name="colorRojo">#f44336</color>
+    <color name="colorVerde">#8bc34a</color>
+    <color name="colorGrisSuave">#e0e0e0</color>
+    <color name="colorAmarillo">#ffeb3b</color>
+    <color name="colorFondo">#e8eaf6  </color>
+    <color name="colorVerdeIntenso">#00e676  </color>
 
 </resources>

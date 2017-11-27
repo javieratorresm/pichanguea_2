@@ -1,366 +1,248 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorFondo"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
 
 
+
+
+
+
+
+
     <LinearLayout
-        android:id="@+id/confirmacion"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="#d6d6d6"
-        android:orientation="horizontal"
-        android:visibility="gone">
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text="Confirmar asistencia "
-            android:textSize="10sp" />
-
-
-        <ImageButton
-            android:id="@+id/confirmaButton"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_gravity="right"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ticket"
-            android:onClick="confirmarJugador"/>
-        <View
-            android:id="@+id/comodin"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/comodin">
-            <ImageButton
-                android:id="@+id/menosButton"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/remove"
-                android:onClick="restarGalleta"
-
-                />
-            <TextView
-                android:id="@+id/textCantidadGalletas"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:text=""
-                android:textAlignment="center"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/menosButton"
-                android:layout_marginTop="12dp" />
-            <ImageButton
-                android:id="@+id/masButton"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_toRightOf="@id/textCantidadGalletas"
-                android:scaleType="fitCenter"
-                android:src="@drawable/add"
-                android:onClick="aumentarGalleta"
-                />
-
-
-        </RelativeLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:id="@+id/layoutModificarGalleta"
-        android:background="#d6d6d6"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text="Modificar galletas "
-            android:textSize="10sp" />
-
-        <ImageButton
-            android:id="@+id/modificaButton"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_gravity="right"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ticket"
-            android:onClick="ModificarGalletasBoton"/>
-        <View
-            android:id="@+id/comodin2"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/comodin2">
-            <ImageButton
-                android:id="@+id/menosButton2"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/remove"
-                android:onClick="restarGalleta"
-
-                />
-            <TextView
-                android:id="@+id/textCantidadGalletas2"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:text=""
-                android:textAlignment="center"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/menosButton2"
-                android:layout_marginTop="12dp" />
-            <ImageButton
-                android:id="@+id/masButton2"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_toRightOf="@id/textCantidadGalletas2"
-                android:scaleType="fitCenter"
-                android:src="@drawable/add"
-                android:onClick="aumentarGalleta"
-                />
-
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ventanaCancelar"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="#d6d6d6"
-        android:orientation="horizontal"
-        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/layout_info"
         >
-        <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="¿Estas seguro?"
-                android:id="@+id/textEstasSeguro"
-                android:gravity="center"
-
-
-                />
-            <ImageButton
-                android:id="@+id/doneButton"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/done"
-                android:onClick="cancelarDone"
-                android:layout_toRightOf="@id/textEstasSeguro"/>
-            <ImageButton
-                android:id="@+id/cancelButton"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/clear"
-                android:onClick="cancelarCancel"
-                android:layout_toRightOf="@+id/doneButton"/>
-        </RelativeLayout>
-    </LinearLayout>
-
-
-
-
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Información de Partido"
-            android:textSize="20dp" />
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-        <ImageButton
-            android:id="@+id/imageButtonActualizar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="bottom"
-            android:scaleType="fitCenter"
-            android:src="@drawable/sync"
-            android:onClick="actualizarJugadores"/>
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="bottom"
-            android:scaleType="fitCenter"
-            android:src="@drawable/chat"
-            android:onClick="abrirChat"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/nombreEquipo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Equipo: "
-            android:background="#b7b7b7"/>
-        <TextView
-            android:id="@+id/textNombreEquipo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/tipoPartidoLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tipo de partido: "
-            android:background="#b7b7b7"/>
-        <TextView
-            android:id="@+id/textTipoPartido"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            />
-
-    </LinearLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp">
         <LinearLayout
-            android:id="@+id/fechaLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Fecha: "
-                android:background="#b7b7b7"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
             <TextView
                 android:id="@+id/textFecha"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:text="fecha"
+                android:paddingRight="15dp"
                 />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/horaLayout"
-            android:layout_marginLeft="4dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/fechaLayout"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hora: "
-                android:background="#b7b7b7"/>
             <TextView
                 android:id="@+id/textHora"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:text="hora"
+                android:paddingRight="10dp"
                 />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/nombreEquipo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/textNombreEquipo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="equipo"
+                android:textSize="25dp"
+
+
+                />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
         </LinearLayout>
 
-    </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/tipoPartidoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/textTipoPartido"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="15dp"
+
+                />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/complejoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:orientation="horizontal">
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/textComplejo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+
+                />
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=", cancha "
+
+                />
+            <TextView
+                android:id="@+id/textCancha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:paddingLeft="5dp"
+                />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+    </LinearLayout>
+
 
     <LinearLayout
-        android:id="@+id/complejoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/layout_partidos"
+        android:layout_below="@+id/layout_info"
+        android:layout_above="@+id/layout_galletas"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:text="Lista de jugadores"
+            android:gravity="center"/>
+        <ListView
+            android:id="@+id/listaJugadores"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:divider="#3b000000"
+            android:dividerHeight="1dp"
+            >
+
+
+        </ListView>
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Complejo: "
-            android:background="#b7b7b7"/>
-        <TextView
-            android:id="@+id/textComplejo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancha: "
+        android:orientation="horizontal"
+        android:id="@+id/layout_galletas"
+        android:layout_above="@+id/layout_botones">
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <ImageButton
+            android:id="@+id/menosButton"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/remove"
+            android:onClick="restarGalleta"
 
-            android:gravity="right"
-            android:layout_marginLeft="10dp"
-            android:background="#b7b7b7"/>
+            />
         <TextView
-            android:id="@+id/textCancha"
+            android:id="@+id/textCantidadGalletas"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:text=""
+            android:textAlignment="center"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/menosButton"
+            android:layout_marginTop="12dp" />
+        <ImageButton
+            android:id="@+id/masButton"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_toRightOf="@id/textCantidadGalletas"
+            android:scaleType="fitCenter"
+            android:src="@drawable/add"
+            android:onClick="aumentarGalleta"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_botones"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
+            android:layout_weight="1"
+            android:text="Cancelar"
+            android:onClick="cancelarAsistencia"
+            android:id="@+id/botonCancelar"
+/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Modificar"
+            android:onClick="ModificarGalletas"
+
+            android:id="@+id/botonModificar"
+
             />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Confirmar"
+
+            android:id="@+id/botonConfirmar"
+            android:onClick="confirmarJugador"/>
+
+
     </LinearLayout>
 
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:text="Lista de jugadores"
-        android:gravity="center"/>
-    <ListView
-        android:id="@+id/listaJugadores"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:divider="#3b000000"
-        android:dividerHeight="1dp"
-        >
 
 
-    </ListView>
-
-
-
-
-
-</LinearLayout>
+</RelativeLayout>
