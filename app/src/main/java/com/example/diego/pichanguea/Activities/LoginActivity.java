@@ -34,6 +34,7 @@ import android.widget.Toast;
 
 import com.example.diego.pichanguea.Controllers.Controllers.Get.sesionGet;
 import com.example.diego.pichanguea.R;
+import com.onesignal.OneSignal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +72,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //ONE SIGNAL!!
+
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -175,7 +178,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     }
     private void attemptLogin() {
-        new sesionGet(this).execute(getResources().getString(R.string.servidor)+"api/Sesion?usuario=RubenX3M&pass=tdsL6tJThUoVbFrktWVnQQ==");
+        new sesionGet(this).execute(getResources().getString(R.string.servidor)+"api/Sesion?usuario=jquevedor&pass=CQXB3fRyHVJT7pfyMFfolg==");
 
         if (mAuthTask != null) {
             return;
