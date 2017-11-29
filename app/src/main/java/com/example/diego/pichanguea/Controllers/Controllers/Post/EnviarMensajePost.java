@@ -17,14 +17,14 @@ import java.net.URL;
  * Created by Diego on 16-11-2017.
  */
 
-public class enviarMensajePost extends AsyncTask<String, Void, String> {
+public class EnviarMensajePost extends AsyncTask<String, Void, String> {
     private SSLTrust sT;
     private ChatActivity chatActivity;
     Toast toast;
     Context context;
     int duration;
 
-    public enviarMensajePost(ChatActivity chatActivity) {
+    public EnviarMensajePost(ChatActivity chatActivity) {
         this.chatActivity = chatActivity;
     }
 

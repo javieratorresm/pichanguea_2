@@ -2,39 +2,36 @@ package com.example.diego.pichanguea.Activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.LayoutAnimationController;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.diego.pichanguea.Classes.AdapterJugador;
-import com.example.diego.pichanguea.Controllers.Controllers.Post.confirmarPost;
+import com.example.diego.pichanguea.Classes.Singleton;
+import com.example.diego.pichanguea.Controllers.Controllers.Post.ConfirmarPost;
+import com.example.diego.pichanguea.Controllers.Controllers.Post.NotificacionJugadorPost;
 import com.example.diego.pichanguea.Controllers.Controllers.Put.modificarAsistenciaPut;
 import com.example.diego.pichanguea.Controllers.Controllers.Get.jugadoresGet;
 import com.example.diego.pichanguea.Models.Equipo;
+import com.example.diego.pichanguea.Models.NotificacionJugador;
 import com.example.diego.pichanguea.Models.Partido;
 import com.example.diego.pichanguea.Models.TipoPartido;
 import com.example.diego.pichanguea.Models.Usuario;
 import com.example.diego.pichanguea.R;
 import com.example.diego.pichanguea.Utilities.JsonHandler;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import org.json.JSONObject;
 
 
 public class InfoPartidoActivity extends AppCompatActivity {
@@ -42,12 +39,13 @@ public class InfoPartidoActivity extends AppCompatActivity {
     Usuario usuario=new Usuario();
     TipoPartido tipoPartido=new TipoPartido();
     Equipo equipo=new Equipo();
+    NotificacionJugador notificacionJugador;
     JsonHandler jh= new JsonHandler();
     String asistencia;
     private String[] jugadoresPartido;
 
     private int cantidadGalletas=0;
-    private String info;
+    private String datosPartidos;
     String resultado;
     private int numeroJugadores;
     private String idUsuario;
@@ -55,6 +53,8 @@ public class InfoPartidoActivity extends AppCompatActivity {
     private Context context;
     private Toast toast;
     private int jugadoresMasGalletas;
+    private String topic;
+    private String nombreUsuario;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -63,12 +63,14 @@ public class InfoPartidoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_info_partido);
-        info=getIntent().getExtras().getString("info");
-        int posicion=Integer.parseInt(getIntent().getExtras().getString("posicion"));
-        idUsuario=getIntent().getExtras().getString("idUsuario");
-        resultado=getIntent().getExtras().getString("parametro");
-        usuario.setId(String.valueOf(Math.round(Float.valueOf(idUsuario))));
-        jh.getPartido(info,posicion,partido,tipoPartido,equipo);
+        System.out.println("llego al create");
+        usuario= Singleton.getInstance().getUsuario();
+
+        partido=Singleton.getInstance().getPartido();
+        tipoPartido=partido.getTipoPartido();
+        equipo=partido.getEquipo();
+        topic="/topics/pichanguea_partido_id_"+partido.getIdPartido();
+
         TextView tipoPartidoView=(TextView) findViewById(R.id.textTipoPartido);
         TextView fechaView=(TextView) findViewById(R.id.textFecha);
         TextView complejoView=(TextView) findViewById(R.id.textComplejo);
@@ -253,17 +255,19 @@ public class InfoPartidoActivity extends AppCompatActivity {
     public void confirmarJugador(View view) {
         if(!partido.getAsistencia().equals("1.0")){
             if(partido.getAsistencia().equals("2.0")) {
-                new confirmarPost().execute(getResources().getString(R.string.servidor) + "api/Jugador/" + idUsuario + "/Partidos/" + partido.getIdPartido() + "/Confirmar/1/Galletas/" + Integer.toString(cantidadGalletas), "");
+                new ConfirmarPost().execute(getResources().getString(R.string.servidor) + "api/Jugador/" + usuario.getId() + "/Partidos/" + partido.getIdPartido() + "/Confirmar/1/Galletas/" + Integer.toString(cantidadGalletas), "");
                 new jugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
                 partido.setAsistencia("1.0");
 
             }
             else if (partido.getAsistencia().equals("0.0")) {
-                new modificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+idUsuario+"/Partidos/"+partido.getIdPartido()+"/Confirmar/1/Galletas/"+Integer.toString(cantidadGalletas),"");
+                new modificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+usuario.getId()+"/Partidos/"+partido.getIdPartido()+"/Confirmar/1/Galletas/"+Integer.toString(cantidadGalletas),"");
                 new jugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
                 partido.setAsistencia("1.0");
 
             }
+            //FirebaseMessaging.getInstance().subscribeToTopic("pichanguea_"+partido.getIdPartido());
+            FirebaseMessaging.getInstance().subscribeToTopic("pichanguea_partido_id_"+partido.getIdPartido());
             actualizarBotones();
 
         }
@@ -284,9 +288,16 @@ public class InfoPartidoActivity extends AppCompatActivity {
     }
     public void cancelarAsistencia(View view) {
         if(partido.getAsistencia().equals("1.0")){
-            new modificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+idUsuario+"/Partidos/"+partido.getIdPartido()+"/Confirmar/0","");
+            new modificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+usuario.getId()+"/Partidos/"+partido.getIdPartido()+"/Confirmar/0","");
+            //FirebaseMessaging.getInstance().unsubscribeFromTopic("pichanguea_"+partido.getIdPartido());
+            FirebaseMessaging.getInstance().unsubscribeFromTopic("pichanguea_partido_id_"+partido.getIdPartido());
+
+            notificacionJugador=new NotificacionJugador(idUsuario,partido.getIdPartido(),equipo.getEquNombre()+", "+partido.getParDia()+"/"+partido.getParMes()+", "+partido.getParHoras(),usuario.getNombre()+" "+usuario.getPaterno()+" ha cancelado asistencia",usuario.getId(),topic);
+            JsonHandler jh= new JsonHandler();
+            JSONObject jo=jh.setNotificacionJugador(notificacionJugador);
+            new NotificacionJugadorPost().execute(getResources().getString(R.string.fcm_server),jo.toString());
             Intent act=new Intent(this,MenuActivity.class);
-            act.putExtra("parametro", resultado);
+            //act.putExtra("parametro", resultado);
 
             startActivity(act);
 
@@ -304,7 +315,7 @@ public class InfoPartidoActivity extends AppCompatActivity {
 
     public void ModificarGalletas(View view) {
         if(partido.getAsistencia().equals("1.0")){
-            new modificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+idUsuario+"/Partidos/"+partido.getIdPartido()+"/Galletas/"+Integer.toString(cantidadGalletas),"");
+            new modificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+usuario.getId()+"/Partidos/"+partido.getIdPartido()+"/Galletas/"+Integer.toString(cantidadGalletas),"");
 
             new jugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
         }
@@ -440,15 +451,5 @@ public class InfoPartidoActivity extends AppCompatActivity {
         toast.show();
     }
 
-    public void cancelarDone(View view) {
-        new modificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+idUsuario+"/Partidos/"+partido.getIdPartido()+"/Confirmar/0","");
-        Intent act=new Intent(this,MenuActivity.class);
-        act.putExtra("parametro", resultado);
 
-        startActivity(act);
-    }
-
-    public void cancelarCancel(View view) {
-
-    }
 }

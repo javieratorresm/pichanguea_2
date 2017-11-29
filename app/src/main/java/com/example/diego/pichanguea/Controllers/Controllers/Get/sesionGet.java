@@ -24,6 +24,7 @@ public class sesionGet extends AsyncTask<String, Void, String>  {
     protected String doInBackground(String...url) {
         try {
             URL u = new URL(url[0]);
+
             //sT.trustEveryone(); //necesario para conexión ssl
             HttpURLConnection connection = (HttpURLConnection) u.openConnection();
             connection.setReadTimeout(10000);

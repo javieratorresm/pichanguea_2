@@ -26,5 +26,11 @@
     <string name="title_activity_tab_partidos">TabPartidosActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
+    <string name="fcm_server">https://fcm.googleapis.com/fcm/send</string>
+
+    <string name="server_key">key=AAAAJmQ3UD4:APA91bHc7DrJOyOKtJYkTFVMiEIu2greybadtDBRDZSp8_Sq_QMQU1b8NYZlyRrXAIsIZ5wNVeZzvbtHrjC0tLaB3AX2I0j0Sdgc2a9P-VlSNV5aPatYQf1cIj-60-XDvq_HjdClPCGW</string>
+
+
+
 
 </resources>

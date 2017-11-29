@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:singleton="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/itemModificarGalletas"
         android:orderInCategory="100"
         android:title="Modificar galletas"
-        app:showAsAction="never" />
+        singleton:showAsAction="never" />
     <item
         android:id="@+id/itemCancelarAsistencia"
         android:orderInCategory="100"
         android:title="Cancelar asistencia"
-        app:showAsAction="never" />
+        singleton:showAsAction="never" />
 
         />
 </menu>

@@ -12,8 +12,10 @@ import android.widget.ListView;
 
 
 import com.example.diego.pichanguea.Activities.InfoPartidoActivity;
+import com.example.diego.pichanguea.Models.Partido;
 import com.example.diego.pichanguea.Models.Usuario;
 import com.example.diego.pichanguea.R;
+import com.example.diego.pichanguea.Utilities.JsonHandler;
 
 import org.json.JSONArray;
 
@@ -25,8 +27,7 @@ import java.util.ArrayList;
 
 public class Tab1Fragment extends Fragment {
     private static final String TAG = "Tab1Fragment";
-    private String resultado;
-    private String result;
+
 
 
     @Nullable
@@ -35,7 +36,7 @@ public class Tab1Fragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_menu1,container,false);
         return view;
     }
-    public void mostrarPartidos(final String result, final String[] listaPartidos, final String resultado, final Usuario usuario){
+    public void mostrarPartidos(final String[] listaPartidos){
 
 
 
@@ -80,12 +81,10 @@ public class Tab1Fragment extends Fragment {
 
 
                 }
-                System.out.println("position");
-                System.out.println(position);
-                act.putExtra("info", result);
-                act.putExtra("posicion", String.valueOf(position));
-                act.putExtra("idUsuario", usuario.getId());
-                act.putExtra("parametro", resultado);
+                JsonHandler jh=new JsonHandler();
+
+                Partido partido=jh.getPartido(position);
+                Singleton.getInstance().setPartido(partido);
                 startActivity(act);
 
 

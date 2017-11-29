@@ -13,16 +13,19 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by Diego on 15-11-2017.
+ * Created by diego on 29-11-2017.
  */
 
-public class confirmarPost extends AsyncTask<String, Void, String> {
+public class NotificacionJugadorPost extends AsyncTask<String, Void, String> {
     private SSLTrust sT;
     private InfoPartidoActivity infoPartidoActivity;
     Toast toast;
+    private String key="key=AAAAJmQ3UD4:APA91bHc7DrJOyOKtJYkTFVMiEIu2greybadtDBRDZSp8_Sq_QMQU1b8NYZlyRrXAIsIZ5wNVeZzvbtHrjC0tLaB3AX2I0j0Sdgc2a9P-VlSNV5aPatYQf1cIj-60-XDvq_HjdClPCGW";
+
 
     @Override
     protected String doInBackground(String... parametros) {
+
 
         try {
             URL u = new URL(parametros[0]);
@@ -32,6 +35,8 @@ public class confirmarPost extends AsyncTask<String, Void, String> {
             connection.setDoInput(true);
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json;charset=utf-8");
+            System.out.println(key);
+            connection.setRequestProperty ("Authorization", key);
             connection.setConnectTimeout(10000);
             connection.setReadTimeout(10000);
             connection.setFixedLengthStreamingMode(parametros[1].getBytes().length);
@@ -39,7 +44,7 @@ public class confirmarPost extends AsyncTask<String, Void, String> {
             OutputStream os = new BufferedOutputStream(connection.getOutputStream());
             os.write(parametros[1].getBytes());
             os.flush();
-            return "OK";
+            return os.toString();
         } catch (Exception e) {
             Log.e("ERROR", this.getClass().toString() + " " + e.toString());
         }
@@ -48,8 +53,8 @@ public class confirmarPost extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result) {
 
-
+        System.out.println("exito!!");
+        System.out.println(result);
     }
 
 }
-

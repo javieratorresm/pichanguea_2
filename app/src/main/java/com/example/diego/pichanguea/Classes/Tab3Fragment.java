@@ -11,8 +11,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.diego.pichanguea.Activities.InfoPartidoActivity;
+import com.example.diego.pichanguea.Models.Partido;
 import com.example.diego.pichanguea.Models.Usuario;
 import com.example.diego.pichanguea.R;
+import com.example.diego.pichanguea.Utilities.JsonHandler;
 
 import java.util.ArrayList;
 
@@ -30,7 +32,7 @@ public class Tab3Fragment extends Fragment {
         View view=inflater.inflate(R.layout.activity_menu3,container,false);
         return view;
     }
-    public void mostrarPartidos(final String result, final String[] listaPartidos, final String resultado, final Usuario usuario){
+    public void mostrarPartidos(final String[] listaPartidos){
         String [] separado;
         int i;
 
@@ -73,10 +75,10 @@ public class Tab3Fragment extends Fragment {
 
                 }
 
-                act.putExtra("info", result);
-                act.putExtra("posicion", String.valueOf(position));
-                act.putExtra("idUsuario", usuario.getId());
-                act.putExtra("parametro", resultado);
+                JsonHandler jh=new JsonHandler();
+
+                Partido partido=jh.getPartido(position);
+                Singleton.getInstance().setPartido(partido);
                 startActivity(act);
 
             }

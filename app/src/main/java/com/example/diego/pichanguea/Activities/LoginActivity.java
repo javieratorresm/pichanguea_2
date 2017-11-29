@@ -32,9 +32,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.diego.pichanguea.Classes.Singleton;
 import com.example.diego.pichanguea.Controllers.Controllers.Get.sesionGet;
+import com.example.diego.pichanguea.Models.Usuario;
 import com.example.diego.pichanguea.R;
-import com.onesignal.OneSignal;
+import com.example.diego.pichanguea.Utilities.JsonHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +51,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * Id to identity READ_CONTACTS permission request.
      */
-    private static final int REQUEST_READ_CONTACTS = 0;
+
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -68,6 +70,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +78,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //ONE SIGNAL!!
 
         setContentView(R.layout.activity_login);
+        System.out.println("asdasdasdasdasd");
+        //Singleton singleton=(Singleton) getApplicationContext();
+        //Singleton.setContext(this);
         // Set up the login form.
+        context=getBaseContext();
+        System.out.println("context");
+        System.out.println(context);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -103,35 +111,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
     }
 
-    private void populateAutoComplete() {
-        if (!mayRequestContacts()) {
-            return;
-        }
 
-        getLoaderManager().initLoader(0, null, this);
-    }
-
-    private boolean mayRequestContacts() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return true;
-        }
-        if (checkSelfPermission(READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        }
-        if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok, new View.OnClickListener() {
-                        @Override
-                        @TargetApi(Build.VERSION_CODES.M)
-                        public void onClick(View v) {
-                            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-                        }
-                    });
-        } else {
-            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-        }
-        return false;
-    }
 
     /**
      * Callback received when a permissions request has been completed.
@@ -145,15 +125,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_READ_CONTACTS) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                populateAutoComplete();
-            }
-        }
-    }
+
 
 
     /**
@@ -163,8 +135,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     public void logear(String result){
         if (result!=null) {
-            Intent act = new Intent(this, MenuActivity.class);
-            act.putExtra("parametro", result);
+
+
+            Usuario usuario=new Usuario();
+            System.out.println("aca3");
+            Intent act = new Intent(this,MenuActivity.class);
+            System.out.println("aca4");
+            JsonHandler jh = new JsonHandler();
+            jh.getInformacion(result,usuario);
+            Singleton.getInstance().setUsuario(usuario);
+            act.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            Singleton.getInstance().setToken("1");
             startActivity(act);
         }
         else{
@@ -178,7 +159,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     }
     private void attemptLogin() {
-        new sesionGet(this).execute(getResources().getString(R.string.servidor)+"api/Sesion?usuario=jquevedor&pass=CQXB3fRyHVJT7pfyMFfolg==");
+        new sesionGet(this).execute(getResources().getString(R.string.servidor)+"api/Sesion?usuario=RubenX3M&pass=tdsL6tJThUoVbFrktWVnQQ==");
 
         if (mAuthTask != null) {
             return;

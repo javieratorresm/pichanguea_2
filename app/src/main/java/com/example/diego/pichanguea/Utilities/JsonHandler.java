@@ -2,7 +2,9 @@ package com.example.diego.pichanguea.Utilities;
 
 import android.util.Log;
 
+import com.example.diego.pichanguea.Classes.Singleton;
 import com.example.diego.pichanguea.Models.Equipo;
+import com.example.diego.pichanguea.Models.NotificacionJugador;
 import com.example.diego.pichanguea.Models.Partido;
 import com.example.diego.pichanguea.Models.TipoPartido;
 import com.example.diego.pichanguea.Models.Usuario;
@@ -136,8 +138,12 @@ public class JsonHandler {
         return null;
 
     }
-    public void getPartido(String datos, int posicion, Partido partido, TipoPartido tipoPartido,Equipo equipo){
+    public Partido getPartido(int posicion){
         try {
+            String datos= Singleton.getInstance().getDatosPartidos();
+            Partido partido=new Partido();
+            TipoPartido tipoPartido=new TipoPartido();
+            Equipo equipo=new Equipo();
             JSONArray ja = new JSONArray(datos);
 
             JSONObject row = ja.getJSONObject(posicion);
@@ -191,31 +197,48 @@ public class JsonHandler {
             partido.setParComplejo(row.getJSONObject("partido").getString("parComplejo"));
             partido.setParCancha(row.getJSONObject("partido").getString("parCancha"));
             partido.setEquipo(equipo);
+            return partido;
 
 
 
         } catch (JSONException e) {
             Log.e("ERROR", this.getClass().toString() + " " + e.toString());
         }
+        return null;
 
     }
 
+    public JSONObject setNotificacionJugador(NotificacionJugador notificacionJugador){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            //jsonObject.accumulate("to",notificacionJugador.getTopic());
+            jsonObject.accumulate("to","/topics/pichanguea_prueba");
+            JSONObject aux=new JSONObject();
+            aux.accumulate("idPartido",notificacionJugador.getIdPartido());
+            jsonObject.accumulate("data",aux);
+            aux=new JSONObject();
+            aux.accumulate("title",notificacionJugador.getTitulo());
+            aux.accumulate("text",notificacionJugador.getTexto());
+            jsonObject.accumulate("notification",aux);
+            return jsonObject;
 
+        } catch (JSONException je) {
+        Log.e("ERROR", this.getClass().toString() + " - " + je.getMessage());
+    }
+        return null;
 
-    public JSONObject setRegister(Usuario usuario) {
+    }
+    /*
+    public JSONObject setUsuario(Usuario usuario) {
         // build jsonObject
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.accumulate("nombreUsuario", usuario.getNombreUsuario());
-            jsonObject.accumulate("clave", usuario.getClave());
-            jsonObject.accumulate("rutSinDigito", usuario.getRutSinDigito());
-            jsonObject.accumulate("rutConDigito", usuario.getRutConDigito());
-            jsonObject.accumulate("nombre", usuario.getNombre());
-            jsonObject.accumulate("paterno", usuario.getPaterno());
-            jsonObject.accumulate("materno", usuario.getMaterno());
-            jsonObject.accumulate("celular", usuario.getCelular());
-            jsonObject.accumulate("mail", usuario.getMail());
-            jsonObject.accumulate("apodo", usuario.getApodo());
+            jsonObject.accumulate("apellidousuario", usuario.getAPELLIDOUSUARIO());
+            jsonObject.accumulate("celularusuario", usuario.getCELULARUSUARIO());
+            jsonObject.accumulate("emailusuario", usuario.getEMAILUSUARIO());
+            jsonObject.accumulate("nicknameusuario", usuario.getNICKNAMEUSUARIO());
+            jsonObject.accumulate("nombreusuario", usuario.getNOMBREUSUARIO());
+            jsonObject.accumulate("passwordusuario", usuario.getPASSWORDUSUARIO());
             return jsonObject;
 
         } catch (JSONException je) {
@@ -223,6 +246,7 @@ public class JsonHandler {
         }
         return null;
     }
+    */
 
 
     /**

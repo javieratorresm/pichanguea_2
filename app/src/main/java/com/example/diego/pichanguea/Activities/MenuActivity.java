@@ -2,38 +2,28 @@ package com.example.diego.pichanguea.Activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.diego.pichanguea.Classes.AdapterPartido;
+import com.example.diego.pichanguea.Classes.Singleton;
 import com.example.diego.pichanguea.Classes.SectionsPageAdapter;
 import com.example.diego.pichanguea.Controllers.Controllers.Get.partidosGet;
 import com.example.diego.pichanguea.Models.Usuario;
 import com.example.diego.pichanguea.R;
 import com.example.diego.pichanguea.Utilities.JsonHandler;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.onesignal.OneSignal;
-import com.example.diego.pichanguea.Classes.SectionsPageAdapter;
+
 import com.example.diego.pichanguea.Classes.Tab1Fragment;
 import com.example.diego.pichanguea.Classes.Tab2Fragment;
 import com.example.diego.pichanguea.Classes.Tab3Fragment;
-import com.example.diego.pichanguea.R;
+
 public class MenuActivity extends AppCompatActivity
 
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -44,14 +34,18 @@ public class MenuActivity extends AppCompatActivity
     Tab2Fragment tab2Fragment=new Tab2Fragment();
     Tab3Fragment tab3Fragment=new Tab3Fragment();
     Usuario usuario = new Usuario();
-    String resultado;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //setContentView(R.layout.activity_menu1);
+
         setContentView(R.layout.activity_tab_partidos);
-        FirebaseMessaging.getInstance().subscribeToTopic("pichanguea_prueba");
+        usuario= Singleton.getInstance().getUsuario();
+
+
         Log.d(TAG,"onCreate:Starting");
         mSectionsPageAdapter=new SectionsPageAdapter(getSupportFragmentManager());
 
@@ -65,21 +59,9 @@ public class MenuActivity extends AppCompatActivity
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Tus Partidos");
-        //ONE SIGNAL!!
-        OneSignal.startInit(this)
-                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-                .unsubscribeWhenNotificationsAreDisabled(true)
-                .init();
-
-        // Call syncHashedEmail anywhere in your app if you have the user's email.
-        // This improves the effectiveness of OneSignal's "best-time" notification scheduling feature.
-        // OneSignal.syncHashedEmail(userEmail);
-
-        resultado=getIntent().getExtras().getString("parametro");
-        JsonHandler jh= new JsonHandler();
 
 
-        jh.getInformacion(resultado,usuario );
+
 
 
         new partidosGet(this).execute(getResources().getString(R.string.servidor)+"api/Jugador/"+usuario.getId()+"/Partidos");
@@ -111,16 +93,16 @@ public class MenuActivity extends AppCompatActivity
                 System.out.println(position);
                 switch (position) {
                     case 0:
-                        tab1Fragment.mostrarPartidos(result,listaPartidos,resultado,usuario);
+                        tab1Fragment.mostrarPartidos(listaPartidos);
 
                         break;
 
                     case 1:
 
-                        tab2Fragment.mostrarPartidos(result,listaPartidos,resultado,usuario);
+                        tab2Fragment.mostrarPartidos(listaPartidos);
                         break;
                     case 2:
-                        tab3Fragment.mostrarPartidos(result,listaPartidos,resultado,usuario);
+                        tab3Fragment.mostrarPartidos(listaPartidos);
                         break;
                     default:
                         break;
@@ -164,6 +146,7 @@ public class MenuActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent act=new Intent(this,LoginActivity.class);
+            Singleton.getInstance().setToken("0");
             startActivity(act);
             return true;
         }
@@ -188,34 +171,8 @@ public class MenuActivity extends AppCompatActivity
 
 
             setupViewPager(mViewPager,result,listaPartidos);
-
-            tab1Fragment.mostrarPartidos(result,listaPartidos,resultado,usuario);
-            //tab1Fragment.mostrarPartidos(result,listaPartidos,resultado,usuario);
-            //tab2Fragment.mostrarPartidos(result,listaPartidos,resultado,usuario);
-            //tab3Fragment.mostrarPartidos(result,listaPartidos,resultado,usuario);
-
-
-
-            /*
-            AdapterPartido adapter = new AdapterPartido(this, listaPartidos);
-            final Intent act = new Intent(this, InfoPartidoActivity.class);
-
-            simpleList.setAdapter(adapter);
-
-            simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                @Override
-                public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-
-                    act.putExtra("info", result);
-                    act.putExtra("posicion", String.valueOf(arg2));
-                    act.putExtra("idUsuario", usuario.getId());
-                    act.putExtra("parametro", resultado);
-                    startActivity(act);
-                    finish();
-                }
-            });
-            */
+            Singleton.getInstance().setDatosPartidos(result);
+            tab1Fragment.mostrarPartidos(listaPartidos);
 
         }
         else{

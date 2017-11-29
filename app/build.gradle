@@ -1,7 +1,4 @@
-plugins {
-    id 'com.onesignal.androidsdk.onesignal-gradle-plugin' version '0.7.0'
-}
-apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
 
 repositories {
     maven { url 'https://maven.google.com' }
@@ -19,9 +16,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        manifestPlaceholders = [onesignal_app_id: "23efdc72-80e9-4b8c-aeab-aef84494ddc6",
-                                // Project number pulled from dashboard, local value is ignored.
-                                onesignal_google_project_number: "REMOTE"]
+
 
     }
     buildTypes {
@@ -40,7 +35,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.4.0'
     compile 'com.android.support:design:25.4.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.onesignal:OneSignal:[3.6.5, 3.99.99]'
+
     compile 'com.google.firebase:firebase-core:11.6.2'
     compile 'com.google.firebase:firebase-messaging:11.6.2'
 

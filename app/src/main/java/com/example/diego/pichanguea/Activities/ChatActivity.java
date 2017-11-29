@@ -1,7 +1,6 @@
 package com.example.diego.pichanguea.Activities;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,8 +12,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.diego.pichanguea.Classes.AdapterChat;
+import com.example.diego.pichanguea.Classes.Singleton;
 import com.example.diego.pichanguea.Controllers.Controllers.Get.mensajesGet;
-import com.example.diego.pichanguea.Controllers.Controllers.Post.enviarMensajePost;
+import com.example.diego.pichanguea.Controllers.Controllers.Post.EnviarMensajePost;
 import com.example.diego.pichanguea.Models.Mensaje;
 import com.example.diego.pichanguea.R;
 import com.example.diego.pichanguea.Utilities.JsonHandler;
@@ -34,8 +34,8 @@ public class ChatActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Chat del partido");
-        idUsuario = getIntent().getExtras().getString("idUsuario");
-        idPartido= getIntent().getExtras().getString("idPartido");
+        idUsuario = Singleton.getInstance().getUsuario().getId();
+        idPartido= Singleton.getInstance().getPartido().getIdPartido();
         new mensajesGet(this).execute(getResources().getString(R.string.servidor)+"api/partido/"+idPartido+"/chat");
 
 
@@ -100,7 +100,7 @@ public class ChatActivity extends AppCompatActivity {
         String textoMensaje= textoEditMensaje.getText().toString();
         System.out.println(textoMensaje);
         if (textoMensaje!=null){
-            new enviarMensajePost(this).execute(getResources().getString(R.string.servidor) + "api/Jugador/"+idUsuario+"/Partidos/"+idPartido+"/Chat", "{\"contenidoMensaje\": \""+textoMensaje+"\"}");
+            new EnviarMensajePost(this).execute(getResources().getString(R.string.servidor) + "api/Jugador/"+idUsuario+"/Partidos/"+idPartido+"/Chat", "{\"contenidoMensaje\": \""+textoMensaje+"\"}");
             textoEditMensaje.setText("");
             new mensajesGet(this).execute(getResources().getString(R.string.servidor)+"api/partido/"+idPartido+"/chat");
 
