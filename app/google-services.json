@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "164890103870",
+    "firebase_url": "https://pichanguea-73d3f.firebaseio.com",
+    "project_id": "pichanguea-73d3f",
+    "storage_bucket": "pichanguea-73d3f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:164890103870:android:0f390f7be47f8557",
+        "android_client_info": {
+          "package_name": "com.example.diego.pichanguea"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "164890103870-5n59kt3tmj21r6sfctrd2j1evkqnis9s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNJnLEg3Ieu7aH5kdCOJqpbYvmJaYo9UA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

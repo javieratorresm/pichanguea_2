@@ -27,6 +27,7 @@ import com.example.diego.pichanguea.Controllers.Controllers.Get.partidosGet;
 import com.example.diego.pichanguea.Models.Usuario;
 import com.example.diego.pichanguea.R;
 import com.example.diego.pichanguea.Utilities.JsonHandler;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.onesignal.OneSignal;
 import com.example.diego.pichanguea.Classes.SectionsPageAdapter;
 import com.example.diego.pichanguea.Classes.Tab1Fragment;
@@ -50,6 +51,7 @@ public class MenuActivity extends AppCompatActivity
 
         //setContentView(R.layout.activity_menu1);
         setContentView(R.layout.activity_tab_partidos);
+        FirebaseMessaging.getInstance().subscribeToTopic("pichanguea_prueba");
         Log.d(TAG,"onCreate:Starting");
         mSectionsPageAdapter=new SectionsPageAdapter(getSupportFragmentManager());
 
