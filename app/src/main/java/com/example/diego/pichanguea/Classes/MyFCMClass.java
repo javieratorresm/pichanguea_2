@@ -42,26 +42,6 @@ public class MyFCMClass extends FirebaseMessagingService {
         if (remoteMessage.getNotification() != null) {
 
 
-            /*
-
-            String id=("250");
-
-
-
-            String result=doInBackground(getResources().getString(R.string.servidor)+"api/Partido/"+id);
-            JsonHandler jh=new JsonHandler();
-            Partido partido=jh.getPartidoID(result);
-            partido.setIdPartido(id);
-            Singleton.getInstance().setPartido(partido);
-            Context context=getApplicationContext();
-            Intent act=new Intent(context, InfoPartidoActivity.class);
-            act.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            System.out.println("estoy en el mensaje!");
-            startActivity(act);
-
-            // do with Notification payload...
-            // remoteMessage.getNotification().getBody()
-            */
         }
 
 

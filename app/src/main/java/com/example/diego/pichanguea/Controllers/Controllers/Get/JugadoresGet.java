@@ -18,11 +18,11 @@ import java.util.Scanner;
  * Created by diego on 05-10-2017.
  */
 
-public class jugadoresGet extends AsyncTask<String, Void, String> {
+public class JugadoresGet extends AsyncTask<String, Void, String> {
     private SSLTrust sT;
     private InfoPartidoActivity infoPartidoActivity;
     Toast toast;
-    public jugadoresGet(InfoPartidoActivity infoPartidoActivity){
+    public JugadoresGet(InfoPartidoActivity infoPartidoActivity){
         this.infoPartidoActivity=infoPartidoActivity;
     }
     @Override

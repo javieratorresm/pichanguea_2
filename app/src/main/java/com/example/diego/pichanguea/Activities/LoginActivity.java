@@ -5,9 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -33,15 +30,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.diego.pichanguea.Classes.Singleton;
-import com.example.diego.pichanguea.Controllers.Controllers.Get.sesionGet;
+import com.example.diego.pichanguea.Controllers.Controllers.Get.SesionGet;
 import com.example.diego.pichanguea.Models.Usuario;
 import com.example.diego.pichanguea.R;
 import com.example.diego.pichanguea.Utilities.JsonHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
@@ -78,13 +73,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //ONE SIGNAL!!
 
         setContentView(R.layout.activity_login);
-        System.out.println("asdasdasdasdasd");
-        //Singleton singleton=(Singleton) getApplicationContext();
-        //Singleton.setContext(this);
-        // Set up the login form.
-        context=getBaseContext();
-        System.out.println("context");
-        System.out.println(context);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -138,9 +126,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
             Usuario usuario=new Usuario();
-            System.out.println("aca3");
             Intent act = new Intent(this,MenuActivity.class);
-            System.out.println("aca4");
             JsonHandler jh = new JsonHandler();
             jh.getInformacion(result,usuario);
             Singleton.getInstance().setUsuario(usuario);
@@ -159,7 +145,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     }
     private void attemptLogin() {
-        new sesionGet(this).execute(getResources().getString(R.string.servidor)+"api/Sesion?usuario=RubenX3M&pass=tdsL6tJThUoVbFrktWVnQQ==");
+        new SesionGet(this).execute(getResources().getString(R.string.servidor)+"api/Sesion?usuario=RubenX3M&pass=tdsL6tJThUoVbFrktWVnQQ==");
 
         if (mAuthTask != null) {
             return;
@@ -204,7 +190,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
-            new sesionGet(this).execute(getResources().getString(R.string.servidor)+"Sesion?usuario=jquevedog&pass=qL0EXUkr/8sHV0xU/d5WZg");
+            new SesionGet(this).execute(getResources().getString(R.string.servidor)+"Sesion?usuario=jquevedog&pass=qL0EXUkr/8sHV0xU/d5WZg");
         }
     }
 

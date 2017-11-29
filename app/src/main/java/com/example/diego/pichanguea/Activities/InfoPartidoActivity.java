@@ -20,8 +20,8 @@ import com.example.diego.pichanguea.Classes.AdapterJugador;
 import com.example.diego.pichanguea.Classes.Singleton;
 import com.example.diego.pichanguea.Controllers.Controllers.Post.ConfirmarPost;
 import com.example.diego.pichanguea.Controllers.Controllers.Post.NotificacionJugadorPost;
-import com.example.diego.pichanguea.Controllers.Controllers.Put.modificarAsistenciaPut;
-import com.example.diego.pichanguea.Controllers.Controllers.Get.jugadoresGet;
+import com.example.diego.pichanguea.Controllers.Controllers.Put.ModificarAsistenciaPut;
+import com.example.diego.pichanguea.Controllers.Controllers.Get.JugadoresGet;
 import com.example.diego.pichanguea.Models.Equipo;
 import com.example.diego.pichanguea.Models.NotificacionJugador;
 import com.example.diego.pichanguea.Models.Partido;
@@ -63,7 +63,7 @@ public class InfoPartidoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_info_partido);
-        System.out.println("llego al create");
+
         usuario= Singleton.getInstance().getUsuario();
 
         partido=Singleton.getInstance().getPartido();
@@ -113,7 +113,7 @@ public class InfoPartidoActivity extends AppCompatActivity {
         actualizarBotones();
 
 
-        new jugadoresGet(this).execute(getResources().getString(R.string.servidor)+"api/partido/"+partido.getIdPartido()+"/jugadores/confirmados");
+        new JugadoresGet(this).execute(getResources().getString(R.string.servidor)+"api/partido/"+partido.getIdPartido()+"/jugadores/confirmados");
 
 
 
@@ -256,13 +256,13 @@ public class InfoPartidoActivity extends AppCompatActivity {
         if(!partido.getAsistencia().equals("1.0")){
             if(partido.getAsistencia().equals("2.0")) {
                 new ConfirmarPost().execute(getResources().getString(R.string.servidor) + "api/Jugador/" + usuario.getId() + "/Partidos/" + partido.getIdPartido() + "/Confirmar/1/Galletas/" + Integer.toString(cantidadGalletas), "");
-                new jugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
+                new JugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
                 partido.setAsistencia("1.0");
 
             }
             else if (partido.getAsistencia().equals("0.0")) {
-                new modificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+usuario.getId()+"/Partidos/"+partido.getIdPartido()+"/Confirmar/1/Galletas/"+Integer.toString(cantidadGalletas),"");
-                new jugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
+                new ModificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+usuario.getId()+"/Partidos/"+partido.getIdPartido()+"/Confirmar/1/Galletas/"+Integer.toString(cantidadGalletas),"");
+                new JugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
                 partido.setAsistencia("1.0");
 
             }
@@ -288,11 +288,11 @@ public class InfoPartidoActivity extends AppCompatActivity {
     }
     public void cancelarAsistencia(View view) {
         if(partido.getAsistencia().equals("1.0")){
-            new modificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+usuario.getId()+"/Partidos/"+partido.getIdPartido()+"/Confirmar/0","");
+            new ModificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+usuario.getId()+"/Partidos/"+partido.getIdPartido()+"/Confirmar/0","");
             //FirebaseMessaging.getInstance().unsubscribeFromTopic("pichanguea_"+partido.getIdPartido());
             FirebaseMessaging.getInstance().unsubscribeFromTopic("pichanguea_partido_id_"+partido.getIdPartido());
 
-            notificacionJugador=new NotificacionJugador(idUsuario,partido.getIdPartido(),equipo.getEquNombre()+", "+partido.getParDia()+"/"+partido.getParMes()+", "+partido.getParHoras(),usuario.getNombre()+" "+usuario.getPaterno()+" ha cancelado asistencia",usuario.getId(),topic);
+            notificacionJugador=new NotificacionJugador(idUsuario,partido.getIdPartido(),equipo.getEquNombre()+", "+partido.getParDia()+"/"+partido.getParMes()+"/"+partido.getParAno()+", "+partido.getParHora()+ " Hrs",usuario.getNombre()+" "+usuario.getPaterno()+" ha cancelado asistencia",usuario.getId(),topic);
             JsonHandler jh= new JsonHandler();
             JSONObject jo=jh.setNotificacionJugador(notificacionJugador);
             new NotificacionJugadorPost().execute(getResources().getString(R.string.fcm_server),jo.toString());
@@ -315,9 +315,9 @@ public class InfoPartidoActivity extends AppCompatActivity {
 
     public void ModificarGalletas(View view) {
         if(partido.getAsistencia().equals("1.0")){
-            new modificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+usuario.getId()+"/Partidos/"+partido.getIdPartido()+"/Galletas/"+Integer.toString(cantidadGalletas),"");
+            new ModificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+usuario.getId()+"/Partidos/"+partido.getIdPartido()+"/Galletas/"+Integer.toString(cantidadGalletas),"");
 
-            new jugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
+            new JugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
         }
         else{
             context = getApplicationContext();
@@ -439,7 +439,7 @@ public class InfoPartidoActivity extends AppCompatActivity {
 
 
     public void actualizarJugadores(View view) {
-        new jugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
+        new JugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
         context = getApplicationContext();
         if(toast!=null){
             toast.cancel();

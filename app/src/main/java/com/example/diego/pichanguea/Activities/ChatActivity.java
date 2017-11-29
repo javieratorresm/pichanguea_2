@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.example.diego.pichanguea.Classes.AdapterChat;
 import com.example.diego.pichanguea.Classes.Singleton;
-import com.example.diego.pichanguea.Controllers.Controllers.Get.mensajesGet;
+import com.example.diego.pichanguea.Controllers.Controllers.Get.MensajesGet;
 import com.example.diego.pichanguea.Controllers.Controllers.Post.EnviarMensajePost;
 import com.example.diego.pichanguea.Models.Mensaje;
 import com.example.diego.pichanguea.R;
@@ -36,7 +36,7 @@ public class ChatActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Chat del partido");
         idUsuario = Singleton.getInstance().getUsuario().getId();
         idPartido= Singleton.getInstance().getPartido().getIdPartido();
-        new mensajesGet(this).execute(getResources().getString(R.string.servidor)+"api/partido/"+idPartido+"/chat");
+        new MensajesGet(this).execute(getResources().getString(R.string.servidor)+"api/partido/"+idPartido+"/chat");
 
 
     }
@@ -57,7 +57,7 @@ public class ChatActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.actualizarChat) {
-            new mensajesGet(this).execute(getResources().getString(R.string.servidor)+"api/partido/"+idPartido+"/chat");
+            new MensajesGet(this).execute(getResources().getString(R.string.servidor)+"api/partido/"+idPartido+"/chat");
             context = getApplicationContext();
             if(toast!=null){
                 toast.cancel();
@@ -98,11 +98,10 @@ public class ChatActivity extends AppCompatActivity {
         JsonHandler jh=new JsonHandler();
         textoEditMensaje=(EditText)findViewById(R.id.editMensaje);
         String textoMensaje= textoEditMensaje.getText().toString();
-        System.out.println(textoMensaje);
         if (textoMensaje!=null){
             new EnviarMensajePost(this).execute(getResources().getString(R.string.servidor) + "api/Jugador/"+idUsuario+"/Partidos/"+idPartido+"/Chat", "{\"contenidoMensaje\": \""+textoMensaje+"\"}");
             textoEditMensaje.setText("");
-            new mensajesGet(this).execute(getResources().getString(R.string.servidor)+"api/partido/"+idPartido+"/chat");
+            new MensajesGet(this).execute(getResources().getString(R.string.servidor)+"api/partido/"+idPartido+"/chat");
 
         }
 

@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.diego.pichanguea.Activities.ChatActivity;
+import com.example.diego.pichanguea.Activities.MenuActivity;
 import com.example.diego.pichanguea.Utilities.SSLTrust;
 
 import java.io.IOException;
@@ -18,12 +18,12 @@ import java.util.Scanner;
  * Created by diego on 05-10-2017.
  */
 
-public class mensajesGet extends AsyncTask<String, Void, String> {
+public class PartidosGet extends AsyncTask<String, Void, String> {
     private SSLTrust sT;
-    private ChatActivity chatActivity;
+    private MenuActivity menu_activity;
     Toast toast;
-    public mensajesGet(ChatActivity chatActivity){
-        this.chatActivity=chatActivity;
+    public PartidosGet(MenuActivity menu_activity){
+        this.menu_activity=menu_activity;
     }
     @Override
     protected String doInBackground(String...url) {
@@ -47,6 +47,6 @@ public class mensajesGet extends AsyncTask<String, Void, String> {
         return null;
     }// doInBackground(String... urls)
     protected void onPostExecute(String result) {
-        chatActivity.mostrarMensajes(result);
+        menu_activity.mostrarPartidos(result);
     }
 }

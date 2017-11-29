@@ -16,7 +16,7 @@ import java.net.URL;
  * Created by Diego on 18-11-2017.
  */
 
-public class modificarGalletasPut extends AsyncTask<String, Void, String> {
+public class ModificarGalletasPut extends AsyncTask<String, Void, String> {
     private SSLTrust sT;
     private InfoPartidoActivity infoPartidoActivity;
     Toast toast;

@@ -16,7 +16,7 @@ import java.net.URL;
  * Created by Diego on 15-11-2017.
  */
 
-public class modificarAsistenciaPut extends AsyncTask<String, Void, String> {
+public class ModificarAsistenciaPut extends AsyncTask<String, Void, String> {
     private SSLTrust sT;
     private InfoPartidoActivity infoPartidoActivity;
     Toast toast;

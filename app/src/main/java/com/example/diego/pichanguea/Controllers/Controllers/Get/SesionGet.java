@@ -13,11 +13,11 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Scanner;
 
-public class sesionGet extends AsyncTask<String, Void, String>  {
+public class SesionGet extends AsyncTask<String, Void, String>  {
     //private SSLTrust sT;
     private LoginActivity login_activity;
     Toast toast;
-    public sesionGet(LoginActivity login_activity){
+    public SesionGet(LoginActivity login_activity){
         this.login_activity=login_activity;
     }
     @Override

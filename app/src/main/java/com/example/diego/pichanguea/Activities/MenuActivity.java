@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.diego.pichanguea.Classes.Singleton;
 import com.example.diego.pichanguea.Classes.SectionsPageAdapter;
-import com.example.diego.pichanguea.Controllers.Controllers.Get.partidosGet;
+import com.example.diego.pichanguea.Controllers.Controllers.Get.PartidosGet;
 import com.example.diego.pichanguea.Models.Usuario;
 import com.example.diego.pichanguea.R;
 import com.example.diego.pichanguea.Utilities.JsonHandler;
@@ -64,7 +64,7 @@ public class MenuActivity extends AppCompatActivity
 
 
 
-        new partidosGet(this).execute(getResources().getString(R.string.servidor)+"api/Jugador/"+usuario.getId()+"/Partidos");
+        new PartidosGet(this).execute(getResources().getString(R.string.servidor)+"api/Jugador/"+usuario.getId()+"/Partidos");
 
 
 
@@ -90,7 +90,6 @@ public class MenuActivity extends AppCompatActivity
 
             @Override
             public void onPageSelected(int position) {
-                System.out.println(position);
                 switch (position) {
                     case 0:
                         tab1Fragment.mostrarPartidos(listaPartidos);
