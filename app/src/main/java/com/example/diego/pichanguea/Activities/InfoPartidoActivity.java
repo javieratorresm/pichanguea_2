@@ -2,13 +2,6 @@ package com.example.diego.pichanguea.Activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,8 +11,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.LayoutAnimationController;
 import android.view.animation.TranslateAnimation;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -45,7 +36,10 @@ public class InfoPartidoActivity extends AppCompatActivity {
     JsonHandler jh= new JsonHandler();
     String asistencia;
     private String[] jugadoresPartido;
+    private LinearLayout layoutAnimado;
 
+    private LinearLayout layoutModificarGalletas;
+    private LinearLayout layoutConfirmacionCancelar;
     private int cantidadGalletas=0;
     private String info;
     String resultado;
@@ -57,12 +51,12 @@ public class InfoPartidoActivity extends AppCompatActivity {
     private int jugadoresMasGalletas;
 
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_info_partido);
+        layoutAnimado = (LinearLayout) findViewById(R.id.confirmacion);
         info=getIntent().getExtras().getString("info");
         int posicion=Integer.parseInt(getIntent().getExtras().getString("posicion"));
         idUsuario=getIntent().getExtras().getString("idUsuario");
@@ -75,18 +69,12 @@ public class InfoPartidoActivity extends AppCompatActivity {
         TextView canchaView=(TextView) findViewById(R.id.textCancha);
         TextView equipoView=(TextView) findViewById(R.id.textNombreEquipo);
         TextView horaView=(TextView) findViewById(R.id.textHora);
-
-
+        layoutModificarGalletas=(LinearLayout) findViewById(R.id.layoutModificarGalleta);
+        layoutConfirmacionCancelar=(LinearLayout)findViewById(R.id.ventanaCancelar);
+        TextView cantidadGalletas2=(TextView)findViewById(R.id.textCantidadGalletas2);
 
         TextView textCantidadGalletas=(TextView)findViewById(R.id.textCantidadGalletas);
         textCantidadGalletas.setText(String.valueOf(cantidadGalletas));
-
-
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar);
-        View view =getSupportActionBar().getCustomView();
-
 
 
         if(tipoPartido.getIdTipoPartido().equals("7.0")){
@@ -97,10 +85,10 @@ public class InfoPartidoActivity extends AppCompatActivity {
             tipoPartidoView.setText("Partido internacional");
             numeroJugadores=11;
         }
-        fechaView.setText(partido.getParDia()+"/"+partido.getParMes()+"/"+partido.getParAno());
+        fechaView.setText(partido.getParDia()+" / "+partido.getParMes()+" / "+partido.getParAno());
         complejoView.setText(partido.getParComplejo());
         equipoView.setText(partido.getEquipo().getEquNombre());
-        horaView.setText(partido.getParHoras()+":"+partido.getParMinutos()+" Hrs");
+        horaView.setText(partido.getParHoras()+":"+partido.getParMinutos());
 
         if(!partido.getParCancha().equals("")){
             canchaView.setVisibility(View.VISIBLE);
@@ -108,87 +96,28 @@ public class InfoPartidoActivity extends AppCompatActivity {
         }
 
         //Codigo verificar si aun no acepta
-        actualizarBotones();
+        if (!partido.getAsistencia().equals("1.0")) {
+
+            if (layoutAnimado.getVisibility() == View.GONE) {
+                animar(true,"confirmar");
+
+                layoutAnimado.setVisibility(View.VISIBLE);
+            }
+
+
+        }
+        else{
+            cantidadGalletas=partido.getGalletasCarga();
+            cantidadGalletas2.setText(Integer.toString(cantidadGalletas));
+        }
 
 
         new jugadoresGet(this).execute(getResources().getString(R.string.servidor)+"api/partido/"+partido.getIdPartido()+"/jugadores/confirmados");
 
 
 
-        Button botonAceptar=(Button)findViewById(R.id.botonConfirmar);
-        Button botonModificar=(Button)findViewById(R.id.botonModificar);
-        Button botonCancelar=(Button)findViewById(R.id.botonCancelar);
-        ImageButton botonSumar=(ImageButton)findViewById(R.id.masButton);
-        ImageButton botonRestar=(ImageButton)findViewById(R.id.menosButton);
 
 
-        if (!partido.getAsistencia().equals("1.0")) {
-
-            botonAceptar.getBackground().setColorFilter(getResources().getColor(R.color.colorVerdeIntenso), PorterDuff.Mode.DARKEN);
-            botonSumar.getBackground().setColorFilter(getResources().getColor(R.color.colorVerdeIntenso), PorterDuff.Mode.DARKEN);
-            botonRestar.getBackground().setColorFilter(getResources().getColor(R.color.colorVerdeIntenso), PorterDuff.Mode.DARKEN);
-            botonModificar.getBackground().setColorFilter(getResources().getColor(R.color.colorGrisSuave), PorterDuff.Mode.DARKEN);
-
-            botonCancelar.getBackground().setColorFilter(getResources().getColor(R.color.colorGrisSuave), PorterDuff.Mode.DARKEN);
-            textCantidadGalletas.setText(String.valueOf(cantidadGalletas));
-
-
-
-
-        }
-        else{
-            cantidadGalletas=partido.getGalletasCarga();
-            textCantidadGalletas.setText(String.valueOf(cantidadGalletas));
-
-            botonAceptar.getBackground().setColorFilter(getResources().getColor(R.color.colorGrisSuave), PorterDuff.Mode.DARKEN);
-
-            botonModificar.getBackground().setColorFilter(getResources().getColor(R.color.colorAmarillo), PorterDuff.Mode.DARKEN);
-            botonSumar.getBackground().setColorFilter(getResources().getColor(R.color.colorAmarillo), PorterDuff.Mode.DARKEN);
-            botonRestar.getBackground().setColorFilter(getResources().getColor(R.color.colorAmarillo), PorterDuff.Mode.DARKEN);
-
-            botonCancelar.getBackground().setColorFilter(getResources().getColor(R.color.colorRojo), PorterDuff.Mode.DARKEN);
-
-
-        }
-
-
-
-
-    }
-    public void actualizarBotones(){
-        Button botonAceptar=(Button)findViewById(R.id.botonConfirmar);
-        Button botonModificar=(Button)findViewById(R.id.botonModificar);
-        Button botonCancelar=(Button)findViewById(R.id.botonCancelar);
-        ImageButton botonSumar=(ImageButton)findViewById(R.id.masButton);
-        ImageButton botonRestar=(ImageButton)findViewById(R.id.menosButton);
-
-
-        if (!partido.getAsistencia().equals("1.0")) {
-
-            botonAceptar.getBackground().setColorFilter(getResources().getColor(R.color.colorVerdeIntenso), PorterDuff.Mode.DARKEN);
-            botonSumar.getBackground().setColorFilter(getResources().getColor(R.color.colorVerdeIntenso), PorterDuff.Mode.DARKEN);
-            botonRestar.getBackground().setColorFilter(getResources().getColor(R.color.colorVerdeIntenso), PorterDuff.Mode.DARKEN);
-            botonModificar.getBackground().setColorFilter(getResources().getColor(R.color.colorGrisSuave), PorterDuff.Mode.DARKEN);
-
-            botonCancelar.getBackground().setColorFilter(getResources().getColor(R.color.colorGrisSuave), PorterDuff.Mode.DARKEN);
-
-
-
-
-
-        }
-        else{
-
-            botonAceptar.getBackground().setColorFilter(getResources().getColor(R.color.colorGrisSuave), PorterDuff.Mode.DARKEN);
-
-            botonModificar.getBackground().setColorFilter(getResources().getColor(R.color.colorAmarillo), PorterDuff.Mode.DARKEN);
-            botonSumar.getBackground().setColorFilter(getResources().getColor(R.color.colorAmarillo), PorterDuff.Mode.DARKEN);
-            botonRestar.getBackground().setColorFilter(getResources().getColor(R.color.colorAmarillo), PorterDuff.Mode.DARKEN);
-
-            botonCancelar.getBackground().setColorFilter(getResources().getColor(R.color.colorRojo), PorterDuff.Mode.DARKEN);
-
-
-        }
 
 
 
@@ -196,13 +125,32 @@ public class InfoPartidoActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+        if (layoutAnimado.getVisibility()==View.VISIBLE){
+            animar(false,"confirmar");
+            layoutAnimado.setVisibility(View.GONE);
 
-        Intent act=new Intent(this,MenuActivity.class);
-        act.putExtra("parametro", resultado);
-        startActivity(act);
 
+        }
+        else if(layoutModificarGalletas.getVisibility()==View.VISIBLE){
+            animar(false,"modificar");
+            layoutModificarGalletas.setVisibility(View.GONE);
+        }
+        else if(layoutConfirmacionCancelar.getVisibility()==View.VISIBLE){
+            animar(false,"cancelar");
+            layoutConfirmacionCancelar.setVisibility(View.GONE);
+        }
+        else{
+            Intent act=new Intent(this,MenuActivity.class);
+            act.putExtra("parametro", resultado);
+            startActivity(act);
+        }
     }
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_jugadores, menu);
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -218,7 +166,10 @@ public class InfoPartidoActivity extends AppCompatActivity {
                 adapter = new AdapterJugador(this, jugadoresPartido);
                 listaJugadores.setAdapter(adapter);
 
-
+                if (layoutModificarGalletas.getVisibility() == View.GONE) {
+                    animar(true, "modificar");
+                    layoutModificarGalletas.setVisibility(View.VISIBLE);
+                }
 
                 return true;
             }
@@ -234,7 +185,7 @@ public class InfoPartidoActivity extends AppCompatActivity {
         }
         else if(id == R.id.itemCancelarAsistencia){
             if(partido.getAsistencia().equals("1.0")){
-
+                cancelarAsistencia();
             }
             else{
                 context = getApplicationContext();
@@ -251,87 +202,77 @@ public class InfoPartidoActivity extends AppCompatActivity {
     }
 
     public void confirmarJugador(View view) {
-        if(!partido.getAsistencia().equals("1.0")){
-            if(partido.getAsistencia().equals("2.0")) {
-                new confirmarPost().execute(getResources().getString(R.string.servidor) + "api/Jugador/" + idUsuario + "/Partidos/" + partido.getIdPartido() + "/Confirmar/1/Galletas/" + Integer.toString(cantidadGalletas), "");
-                new jugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
-                partido.setAsistencia("1.0");
 
-            }
-            else if (partido.getAsistencia().equals("0.0")) {
-                new modificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+idUsuario+"/Partidos/"+partido.getIdPartido()+"/Confirmar/1/Galletas/"+Integer.toString(cantidadGalletas),"");
-                new jugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
-                partido.setAsistencia("1.0");
-
-            }
-            actualizarBotones();
-
+        if (layoutAnimado.getVisibility() == View.VISIBLE){
+            animar(false,"confirmar");
+            layoutAnimado.setVisibility(View.GONE);
         }
-        else{
-            context = getApplicationContext();
-            CharSequence text = "Ya estas confirmado";
-            int duration = Toast.LENGTH_SHORT;
-            toast = Toast.makeText(context, text, duration);
-            toast.show();
-
-        }
-
-
-
-
-
-
-    }
-    public void cancelarAsistencia(View view) {
-        if(partido.getAsistencia().equals("1.0")){
-            new modificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+idUsuario+"/Partidos/"+partido.getIdPartido()+"/Confirmar/0","");
-            Intent act=new Intent(this,MenuActivity.class);
-            act.putExtra("parametro", resultado);
-
-            startActivity(act);
-
-        }
-        else{
-            context = getApplicationContext();
-            CharSequence text = "Aun no confirmas asistencia";
-            int duration = Toast.LENGTH_SHORT;
-            toast = Toast.makeText(context, text, duration);
-            toast.show();
-
-        }
-
-    }
-
-    public void ModificarGalletas(View view) {
-        if(partido.getAsistencia().equals("1.0")){
-            new modificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+idUsuario+"/Partidos/"+partido.getIdPartido()+"/Galletas/"+Integer.toString(cantidadGalletas),"");
-
+        if(partido.getAsistencia().equals("2.0")) {
+            new confirmarPost().execute(getResources().getString(R.string.servidor) + "api/Jugador/" + idUsuario + "/Partidos/" + partido.getIdPartido() + "/Confirmar/1/Galletas/" + Integer.toString(cantidadGalletas), "");
             new jugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
+            partido.setAsistencia("1.0");
         }
-        else{
-            context = getApplicationContext();
-            CharSequence text = "Aun no confirmas asistencia";
-            int duration = Toast.LENGTH_SHORT;
-            toast = Toast.makeText(context, text, duration);
-            toast.show();
+        else if (partido.getAsistencia().equals("0.0")) {
+            new modificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+idUsuario+"/Partidos/"+partido.getIdPartido()+"/Confirmar/1/Galletas/"+Integer.toString(cantidadGalletas),"");
+            new jugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
+            partido.setAsistencia("1.0");
 
         }
+        TextView textCantidadGalletas2=(TextView)findViewById(R.id.textCantidadGalletas2);
+        textCantidadGalletas2.setText(Integer.toString(cantidadGalletas));
 
 
 
+    }
+    private void animar(boolean mostrar,String tipo)
+    {
+        AnimationSet set = new AnimationSet(true);
+        Animation animation = null;
+        if (mostrar)
+        {
+            //desde la esquina inferior derecha a la superior izquierda
+            animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF,0.0f);
+        }
+        else
+        {    //desde la esquina superior izquierda a la esquina inferior derecha
+            animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -1.0f);
+        }
+        //duración en milisegundos
+        animation.setDuration(500);
+        set.addAnimation(animation);
+        LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
+        if(tipo.equals("confirmar")) {
+            layoutAnimado.setLayoutAnimation(controller);
+            layoutAnimado.startAnimation(animation);
 
+        }
+        else if(tipo.equals("modificar")){
+            layoutModificarGalletas.setLayoutAnimation(controller);
+            layoutModificarGalletas.startAnimation(animation);
+            //ListView listaJugadores=(ListView)findViewById(R.id.listaJugadores);
+            //adapter = new AdapterJugador(this,jugadoresPartido,numeroJugadores);
+            //listaJugadores.setAdapter(adapter);
+        }
+        else if(tipo.equals("cancelar")){
+
+            layoutConfirmacionCancelar.setLayoutAnimation(controller);
+            layoutConfirmacionCancelar.setAnimation(animation);
+            ListView listaJugadores=(ListView)findViewById(R.id.listaJugadores);
+            adapter = new AdapterJugador(this,jugadoresPartido);
+            listaJugadores.setAdapter(adapter);
+        }
     }
 
     public void aumentarGalleta(View view) {
         TextView textCantidadGalletas=(TextView)findViewById(R.id.textCantidadGalletas);
-
+        TextView textCantidadGalletas2=(TextView)findViewById(R.id.textCantidadGalletas2);
         if(partido.getAsistencia().equals("1.0")) {
             if (jugadoresMasGalletas < numeroJugadores) {
 
                 cantidadGalletas += 1;
                 jugadoresMasGalletas += 1;
                 textCantidadGalletas.setText(String.valueOf(cantidadGalletas));
-
+                textCantidadGalletas2.setText(String.valueOf(cantidadGalletas));
             } else {
                 context = getApplicationContext();
                 CharSequence text = "No puedes agregar más galletas";
@@ -347,7 +288,7 @@ public class InfoPartidoActivity extends AppCompatActivity {
                 cantidadGalletas += 1;
                 jugadoresMasGalletas += 1;
                 textCantidadGalletas.setText(String.valueOf(cantidadGalletas));
-
+                textCantidadGalletas2.setText(String.valueOf(cantidadGalletas));
             } else {
                 context = getApplicationContext();
                 CharSequence text = "No puedes agregar más galletas";
@@ -366,14 +307,14 @@ public class InfoPartidoActivity extends AppCompatActivity {
 
     public void restarGalleta(View view) {
         TextView textCantidadGalletas=(TextView)findViewById(R.id.textCantidadGalletas);
-
+        TextView textCantidadGalletas2=(TextView)findViewById(R.id.textCantidadGalletas2);
         if(cantidadGalletas>0){
             cantidadGalletas-=1;
             jugadoresMasGalletas-=1;
 
         }
         textCantidadGalletas.setText(String.valueOf(cantidadGalletas));
-
+        textCantidadGalletas2.setText(String.valueOf(cantidadGalletas));
 
     }
 
@@ -425,7 +366,30 @@ public class InfoPartidoActivity extends AppCompatActivity {
         }
     }
 
+    public void cancelarAsistencia() {
+        if (layoutConfirmacionCancelar.getVisibility() == View.GONE) {
+            animar(true,"cancelar");
+            layoutConfirmacionCancelar.setVisibility(View.VISIBLE);
+        }
 
+        //new modificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+idUsuario+"/Partidos/"+partido.getIdPartido()+"/Confirmar/0","");
+        //Intent act=new Intent(this,MenuActivity.class);
+        //act.putExtra("parametro", resultado);
+        //startActivity(act);
+    }
+
+    public void ModificarGalletasBoton(View view) {
+        if (layoutModificarGalletas.getVisibility() == View.VISIBLE){
+            animar(false,"modificar");
+            layoutModificarGalletas.setVisibility(view.GONE);
+
+        }
+
+        new modificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+idUsuario+"/Partidos/"+partido.getIdPartido()+"/Galletas/"+Integer.toString(cantidadGalletas),"");
+
+        new jugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
+
+    }
 
     public void actualizarJugadores(View view) {
         new jugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
@@ -444,11 +408,16 @@ public class InfoPartidoActivity extends AppCompatActivity {
         new modificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+idUsuario+"/Partidos/"+partido.getIdPartido()+"/Confirmar/0","");
         Intent act=new Intent(this,MenuActivity.class);
         act.putExtra("parametro", resultado);
+        if (layoutConfirmacionCancelar.getVisibility() == View.VISIBLE){
+            animar(false,"cancelar");
+            layoutConfirmacionCancelar.setVisibility(view.GONE);
 
+        }
         startActivity(act);
     }
 
     public void cancelarCancel(View view) {
-
+        animar(false,"cancelar");
+        layoutConfirmacionCancelar.setVisibility(View.GONE);
     }
 }

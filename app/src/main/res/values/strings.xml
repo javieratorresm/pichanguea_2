@@ -23,8 +23,6 @@
     <string name="servidor">http://usach.pichanguea.cl/</string>
     <string name="title_activity_register">Sign in</string>
     <string name="title_activity_chat">ChatActivity</string>
-    <string name="title_activity_tab_partidos">TabPartidosActivity</string>
-    <string name="section_format">Hello World from section: %1$d</string>
 
 
 </resources>

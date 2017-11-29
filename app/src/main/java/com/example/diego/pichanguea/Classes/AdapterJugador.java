@@ -47,10 +47,10 @@ public class AdapterJugador extends ArrayAdapter<String> {
         galleta=Math.round(Float.valueOf(separado[1]));
         if(separado[2].equals("1")){
 
-            nombreJugador.setBackgroundColor(getContext().getResources().getColor(R.color.colorVerde));
+            nombreJugador.setBackgroundColor(Color.parseColor("#3ee210"));
         }
         else{
-           nombreJugador.setBackgroundColor(getContext().getResources().getColor(R.color.colorAmarillo));
+           nombreJugador.setBackgroundColor(Color.parseColor("#fff200"));
         }
 
         if (galleta==0){

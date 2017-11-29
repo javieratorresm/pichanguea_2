@@ -2,15 +2,16 @@ package com.example.diego.pichanguea.Activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
+<<<<<<< HEAD
 <<<<<<< HEAD
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 =======
 >>>>>>> fd2a06d2b05bdb2b80410371520f14969201e819
 import android.util.Log;
+=======
+>>>>>>> parent of 513c638... commit 26_11
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,16 +21,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.diego.pichanguea.Classes.AdapterPartido;
-import com.example.diego.pichanguea.Classes.SectionsPageAdapter;
 import com.example.diego.pichanguea.Controllers.Controllers.Get.partidosGet;
 import com.example.diego.pichanguea.Models.Usuario;
 import com.example.diego.pichanguea.R;
 import com.example.diego.pichanguea.Utilities.JsonHandler;
+<<<<<<< HEAD
 import com.onesignal.OneSignal;
 <<<<<<< HEAD
 import com.example.diego.pichanguea.Classes.SectionsPageAdapter;
@@ -41,44 +41,25 @@ import com.example.diego.pichanguea.R;
 
 >>>>>>> fd2a06d2b05bdb2b80410371520f14969201e819
 public class MenuActivity extends AppCompatActivity
+=======
+>>>>>>> parent of 513c638... commit 26_11
 
+public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private static final String TAG="MainActivity";
-    private SectionsPageAdapter mSectionsPageAdapter;
-    private ViewPager mViewPager;
-    Tab1Fragment tab1Fragment=new Tab1Fragment();
-    Tab2Fragment tab2Fragment=new Tab2Fragment();
-    Tab3Fragment tab3Fragment=new Tab3Fragment();
+
     Usuario usuario = new Usuario();
     String resultado;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //setContentView(R.layout.activity_menu1);
-        setContentView(R.layout.activity_tab_partidos);
-        Log.d(TAG,"onCreate:Starting");
-        mSectionsPageAdapter=new SectionsPageAdapter(getSupportFragmentManager());
-
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        //setupViewPager(mViewPager);
-        TabLayout tabLayout=(TabLayout)findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
+        setContentView(R.layout.activity_menu);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Tus Partidos");
-        //ONE SIGNAL!!
-        OneSignal.startInit(this)
-                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-                .unsubscribeWhenNotificationsAreDisabled(true)
-                .init();
-
-        // Call syncHashedEmail anywhere in your app if you have the user's email.
-        // This improves the effectiveness of OneSignal's "best-time" notification scheduling feature.
-        // OneSignal.syncHashedEmail(userEmail);
 
         //one signal
         OneSignal.startInit(this)
@@ -105,54 +86,7 @@ public class MenuActivity extends AppCompatActivity
 
 
 
-
     }
-
-    private void setupViewPager(ViewPager viewPager,final String result,final String[] listaPartidos){
-        SectionsPageAdapter adapter=new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(tab1Fragment,"Confirmados");
-        adapter.addFragment(tab2Fragment,"Sin ver");
-        adapter.addFragment(tab3Fragment,"Cancelados");
-        viewPager.setAdapter(adapter);
-
-        ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrollStateChanged(int arg0) { }
-
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) { }
-
-            @Override
-            public void onPageSelected(int position) {
-                System.out.println(position);
-                switch (position) {
-                    case 0:
-                        tab1Fragment.mostrarPartidos(result,listaPartidos,resultado,usuario);
-
-                        break;
-
-                    case 1:
-
-                        tab2Fragment.mostrarPartidos(result,listaPartidos,resultado,usuario);
-                        break;
-                    case 2:
-                        tab3Fragment.mostrarPartidos(result,listaPartidos,resultado,usuario);
-                        break;
-                    default:
-                        break;
-
-
-                }
-            }
-        };
-        viewPager.setOnPageChangeListener(pageChangeListener);
-
-
-
-
-    }
-
-
 
     @Override
     public void onBackPressed() {
@@ -197,22 +131,12 @@ public class MenuActivity extends AppCompatActivity
 
 
     public void mostrarPartidos(final String result) {
-
         if (result != null) {
             JsonHandler jh = new JsonHandler();
             String[] listaPartidos = jh.getPartidos(result);
+            ListView simpleList = (ListView) findViewById(R.id.listPartidos);
+            //ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.listview_layout,R.id.textView,listaPartidos);
 
-
-            setupViewPager(mViewPager,result,listaPartidos);
-
-            tab1Fragment.mostrarPartidos(result,listaPartidos,resultado,usuario);
-            //tab1Fragment.mostrarPartidos(result,listaPartidos,resultado,usuario);
-            //tab2Fragment.mostrarPartidos(result,listaPartidos,resultado,usuario);
-            //tab3Fragment.mostrarPartidos(result,listaPartidos,resultado,usuario);
-
-
-
-            /*
             AdapterPartido adapter = new AdapterPartido(this, listaPartidos);
             final Intent act = new Intent(this, InfoPartidoActivity.class);
 
@@ -231,7 +155,6 @@ public class MenuActivity extends AppCompatActivity
                     finish();
                 }
             });
-            */
 
         }
         else{

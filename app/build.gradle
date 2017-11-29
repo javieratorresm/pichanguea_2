@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 plugins {
     id 'com.onesignal.androidsdk.onesignal-gradle-plugin' version '0.7.0'
 }
@@ -12,11 +13,13 @@ repositories {
     mavenCentral()
 }
 >>>>>>> fd2a06d2b05bdb2b80410371520f14969201e819
+=======
+>>>>>>> parent of 513c638... commit 26_11
 apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-
+    buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.example.diego.pichanguea"
         minSdkVersion 19
@@ -24,6 +27,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+<<<<<<< HEAD
         manifestPlaceholders = [onesignal_app_id: "23efdc72-80e9-4b8c-aeab-aef84494ddc6",
                                 // Project number pulled from dashboard, local value is ignored.
                                 onesignal_google_project_number: "REMOTE"]
@@ -31,6 +35,8 @@ android {
 
 =======
 >>>>>>> fd2a06d2b05bdb2b80410371520f14969201e819
+=======
+>>>>>>> parent of 513c638... commit 26_11
     }
     buildTypes {
         release {
@@ -51,8 +57,13 @@ dependencies {
     compile 'com.android.support:design:25.3.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 <<<<<<< HEAD
+<<<<<<< HEAD
     compile 'com.onesignal:OneSignal:[3.6.5, 3.99.99]'
 =======
+=======
+
+
+>>>>>>> parent of 513c638... commit 26_11
     testCompile 'junit:junit:4.12'
     compile 'com.onesignal:OneSignal:[3.6.5, 3.99.99]'
 

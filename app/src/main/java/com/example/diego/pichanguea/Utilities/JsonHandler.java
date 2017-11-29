@@ -48,27 +48,9 @@ public class JsonHandler {
             JSONArray ja = new JSONArray(datos);
             String[] result = new String[ja.length()];
             String actor;
-            String hora;
-            String minuto;
-
             for (int i = 0; i < ja.length(); i++) {
                 JSONObject row = ja.getJSONObject(i);
-                if(Integer.valueOf(row.getJSONObject("partido").getJSONObject("parHora").getString("Hora"))<10){
-                    hora="0"+row.getJSONObject("partido").getJSONObject("parHora").getString("Hora");            }
-                else{
-                    hora=row.getJSONObject("partido").getJSONObject("parHora").getString("Hora");
-                }
-
-
-                if(Integer.valueOf(row.getJSONObject("partido").getJSONObject("parHora").getString("Minutos"))<10){
-                    minuto="0"+row.getJSONObject("partido").getJSONObject("parHora").getString("Minutos");
-                }
-                else{
-                    minuto=row.getJSONObject("partido").getJSONObject("parHora").getString("Minutos");
-
-                }
-
-                actor =row.getJSONObject("partido").getJSONObject("equipo").getString("equNombre")+"@#"+row.getJSONObject("partido").getJSONObject("tipoPartido").getString("tpaNombre")+"@#"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Dia")+"/"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Mes")+"/"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Año")+"@#"+row.getString("asistencia")+"@#"+row.getJSONObject("partido").getString("idPartido")+"@#"+hora+":"+minuto+" Hrs";
+                actor =row.getJSONObject("partido").getJSONObject("equipo").getString("equNombre")+"@#"+row.getJSONObject("partido").getJSONObject("tipoPartido").getString("tpaNombre")+"@#"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Dia")+"/"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Mes")+"/"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Año")+"@#"+row.getString("asistencia")+"@#"+row.getJSONObject("partido").getString("idPartido");
                 result[i] = actor;
 
 
@@ -158,21 +140,6 @@ public class JsonHandler {
             partido.setGalletasCarga(Math.round(Float.valueOf(row.getString("galletas"))));
 
             partido.setParHora(row.getJSONObject("partido").getString("parHora"));
-
-            if(Integer.valueOf(row.getJSONObject("partido").getJSONObject("parFecha").getString("Dia"))<10){
-                partido.setParDia("0"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Dia"));            }
-            else{
-                partido.setParDia(row.getJSONObject("partido").getJSONObject("parFecha").getString("Dia"));
-            }
-
-
-            if(Integer.valueOf(row.getJSONObject("partido").getJSONObject("parFecha").getString("Mes"))<10){
-                partido.setParMes("0"+row.getJSONObject("partido").getJSONObject("parFecha").getString("Mes"));
-            }
-            else{
-                partido.setParMes(row.getJSONObject("partido").getJSONObject("parFecha").getString("Mes"));
-
-            }
 
             if(Integer.valueOf(row.getJSONObject("partido").getJSONObject("parHora").getString("Hora"))<10){
                 partido.setParHoras("0"+row.getJSONObject("partido").getJSONObject("parHora").getString("Hora"));            }
