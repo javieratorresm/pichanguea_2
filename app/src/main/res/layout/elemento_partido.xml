@@ -32,7 +32,6 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#000000"
             android:textSize="18sp"
-            android:layout_gravity="left"
             android:text="equipo1"
             android:paddingLeft="15dp"
             />
