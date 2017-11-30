@@ -8,12 +8,19 @@
     android:id="@+id/drawer_layout"
     android:background="@color/colorFondo">
 
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <ListView
         android:id="@+id/listPartidos1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="60dp"
 
 
         android:listSelector="#C8E6C9"/>
+
+    </LinearLayout>
+
 </LinearLayout>
