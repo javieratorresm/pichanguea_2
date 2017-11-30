@@ -97,6 +97,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        if(Singleton.getInstance().getToken()=="1"){
+            Intent act = new Intent(this,MenuActivity.class);
+            startActivity(act);
+
+
+        }
     }
 
 
@@ -130,7 +136,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             JsonHandler jh = new JsonHandler();
             jh.getInformacion(result,usuario);
             Singleton.getInstance().setUsuario(usuario);
-            act.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             Singleton.getInstance().setToken("1");
             startActivity(act);
         }
@@ -145,7 +150,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     }
     private void attemptLogin() {
-        new SesionGet(this).execute(getResources().getString(R.string.servidor)+"api/Sesion?usuario=Javiera&pass=pass");
+        new SesionGet(this).execute(getResources().getString(R.string.servidor)+"api/Sesion?usuario=Diego&pass=password");
 
         if (mAuthTask != null) {
             return;

@@ -53,8 +53,6 @@ public class NotificacionJugadorPost extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result) {
 
-        System.out.println("exito!!");
-        System.out.println(result);
     }
 
 }

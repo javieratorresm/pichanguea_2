@@ -266,7 +266,6 @@ public class InfoPartidoActivity extends AppCompatActivity {
                 partido.setAsistencia("1.0");
 
             }
-            //FirebaseMessaging.getInstance().subscribeToTopic("pichanguea_"+partido.getIdPartido());
             FirebaseMessaging.getInstance().subscribeToTopic("pichanguea_partido_id_"+partido.getIdPartido());
             actualizarBotones();
 
@@ -288,14 +287,16 @@ public class InfoPartidoActivity extends AppCompatActivity {
     }
     public void cancelarAsistencia(View view) {
         if(partido.getAsistencia().equals("1.0")){
-            new ModificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+usuario.getId()+"/Partidos/"+partido.getIdPartido()+"/Confirmar/0","");
-            //FirebaseMessaging.getInstance().unsubscribeFromTopic("pichanguea_"+partido.getIdPartido());
             FirebaseMessaging.getInstance().unsubscribeFromTopic("pichanguea_partido_id_"+partido.getIdPartido());
-
             notificacionJugador=new NotificacionJugador(idUsuario,partido.getIdPartido(),equipo.getEquNombre()+", "+partido.getParDia()+"/"+partido.getParMes()+"/"+partido.getParAno()+", "+partido.getParHoras()+":"+partido.getParMinutos()+ " Hrs",usuario.getNombre()+" "+usuario.getPaterno()+" ha cancelado asistencia",usuario.getId(),topic);
             JsonHandler jh= new JsonHandler();
             JSONObject jo=jh.setNotificacionJugador(notificacionJugador);
             new NotificacionJugadorPost().execute(getResources().getString(R.string.fcm_server),jo.toString());
+            new ModificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+usuario.getId()+"/Partidos/"+partido.getIdPartido()+"/Confirmar/0","");
+
+
+
+
             Intent act=new Intent(this,MenuActivity.class);
             //act.putExtra("parametro", resultado);
 
@@ -315,6 +316,7 @@ public class InfoPartidoActivity extends AppCompatActivity {
 
     public void ModificarGalletas(View view) {
         if(partido.getAsistencia().equals("1.0")){
+
             new ModificarAsistenciaPut().execute(getResources().getString(R.string.servidor)+"api/Jugador/"+usuario.getId()+"/Partidos/"+partido.getIdPartido()+"/Galletas/"+Integer.toString(cantidadGalletas),"");
 
             new JugadoresGet(this).execute(getResources().getString(R.string.servidor) + "api/partido/" + partido.getIdPartido() + "/jugadores/confirmados");
