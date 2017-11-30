@@ -292,7 +292,7 @@ public class InfoPartidoActivity extends AppCompatActivity {
             //FirebaseMessaging.getInstance().unsubscribeFromTopic("pichanguea_"+partido.getIdPartido());
             FirebaseMessaging.getInstance().unsubscribeFromTopic("pichanguea_partido_id_"+partido.getIdPartido());
 
-            notificacionJugador=new NotificacionJugador(idUsuario,partido.getIdPartido(),equipo.getEquNombre()+", "+partido.getParDia()+"/"+partido.getParMes()+"/"+partido.getParAno()+", "+partido.getParHora()+ " Hrs",usuario.getNombre()+" "+usuario.getPaterno()+" ha cancelado asistencia",usuario.getId(),topic);
+            notificacionJugador=new NotificacionJugador(idUsuario,partido.getIdPartido(),equipo.getEquNombre()+", "+partido.getParDia()+"/"+partido.getParMes()+"/"+partido.getParAno()+", "+partido.getParHora()+":"+partido.getParMinutos()+ " Hrs",usuario.getNombre()+" "+usuario.getPaterno()+" ha cancelado asistencia",usuario.getId(),topic);
             JsonHandler jh= new JsonHandler();
             JSONObject jo=jh.setNotificacionJugador(notificacionJugador);
             new NotificacionJugadorPost().execute(getResources().getString(R.string.fcm_server),jo.toString());
